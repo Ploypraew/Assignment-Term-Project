@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าหลักอาจารย์ - Reg-Project.kmutnb</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Sarabun Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/home_page_lecturer.css">
+    <!-- Icon Helper Function -->
+    <script>
+        function getIcon(name, classes = 'h-5 w-5') {
+            const icons = {
+                // Main Icons
+                home: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`,
+                user: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+                menu: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
+                
+                // Project Specific Icons (for Lecturer role)
+                specialProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"></path></svg>`, /* Simple Folder icon */
+
+                coopProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`, /* Briefcase */
+
+                // NEW: Logout Icon (Added for consistency)
+                logOut: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>`,
+            };
+            return icons[name] || '';
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
+    
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Main container -->
+    <div class="w-full">
+        <!-- HEADER -->
+        <header class="header-kmutnb p-4 flex justify-between items-center sticky top-0 z-30">
+            
+            <!-- Left Side: Menu Toggle (Mobile) and Site Title -->
+            <div class="flex items-center space-x-4">
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleSidebar()" class="text-white md:hidden">
+                    <script>document.write(getIcon('menu'));</script>
+                </button>
+                
+                <!-- Site Title -->
+                <span class="site-title text-xl font-bold">Reg-Project.kmutnb</span>
+            </div>
+
+            <!-- Right Side: Profile and Logout Button -->
+            <div class="flex items-center space-x-3">
+                <!-- Profile Info Group -->
+                <div class="flex items-center space-x-2">
+                    <!-- Profile Image -->
+                    <img src="https://placehold.co/36x36/f97316/ffffff?text=U" 
+                         alt="รูปภาพโปรไฟล์" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/36x36/f97316/ffffff?text=U'"
+                         class="profile-img rounded-full h-9 w-9 border-2 border-white object-cover">
+                    <span class="user-name hidden lg:block text-sm font-medium">อาจารย์</span>
+                </div>
+                
+                <!-- Logout Button -->
+                        <a href="../user.html" 
+                   class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md"
+                   role="button">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+        
+        <!-- BANNER SECTION: ปรับขนาดเป็น h-40 (160px) บนมือถือ และ md:h-64 (256px) บนเดสก์ท็อป -->
+        <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                 alt="Student Portal Banner" 
+                 onerror="this.onerror=null;this.src='https://placehold.co/1200x256/004d40/ffffff?text=KMUTNB+Project+Portal'"
+                 class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+
+        <!-- MAIN LAYOUT: Sidebar and Content -->
+        <div class="flex flex-grow relative">
+            <!-- SIDEBAR - Menu for Lecturer Role (UPDATED STRUCTURE) -->
+            <nav id="sidebar" class="sidebar w-64 z-20 hidden md:flex md:flex-col justify-between"> 
+                
+                <!-- TOP MENU ITEMS -->
+                <div class="space-y-0.5 pt-4"> 
+                    <!-- 1. หน้าหลัก (ACTIVE) -->
+                    <a href="home_page_lecturer.html" class="sidebar-item active">
+                        <script>document.write(getIcon('home'));</script>หน้าหลัก
+                    </a>
+                    <!-- 2. โครงงานพิเศษ -->
+                    <a href="special_project_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('specialProject'));</script>โครงงานพิเศษ
+                    </a>
+                    <!-- 3. โครงงานสหกิจ -->
+                    <a href="cooperative_project_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('coopProject'));</script>โครงงานสหกิจ
+                    </a>
+                </div>
+
+                <!-- BOTTOM MENU ITEM: Logout (ADDED) -->
+                <div class="mt-auto border-t border-gray-100 py-2">
+                </div>
+            </nav>
+
+            <!-- CONTENT AREA: Lecturer Home Dashboard -->
+            <section class="flex-grow p-6 md:p-10 content-area">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 pb-2 border-b">โครงงานที่เป็นที่ปรึกษา</h2>
+                
+                <!-- SUMMARY BOXES SECTION (Cards) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <!-- จำนวนนักศึกษา -->
+                    <div class="summary-box box-red">
+                        <div class="text-sm">จำนวนนักศึกษา</div>
+                        <div class="summary-value">10</div>
+                    </div>
+                    <!-- จำนวนโครงงาน -->
+                    <div class="summary-box box-yellow">
+                        <div class="text-sm">จำนวนโครงงาน</div>
+                        <div class="summary-value">5</div>
+                    </div>
+                    <!-- จำนวนโครงงานที่สำเร็จแล้ว -->
+                    <div class="summary-box box-green">
+                        <div class="text-sm">จำนวนโครงงานที่สำเร็จแล้ว</div>
+                        <div class="summary-value">2</div>
+                    </div>
+                </div>
+
+                <!-- PROJECT TABLE SECTION -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">รายชื่อโครงงานที่ปรึกษาทั้งหมด</h3>
+                <table class="project-table">
+                    <thead>
+                        <tr>
+                            <th>รายชื่อโครงงานที่เป็นที่ปรึกษา</th>
+                            <th class="hidden sm:table-cell">ประเภท</th>
+                            <th>รายละเอียด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ระบบจัดการข้อมูลโครงงานพิเศษ</td>
+                            <td class="hidden sm:table-cell">โครงงานพิเศษ</td>
+                            <td>
+                                <a href="project_details_lecturer.html" target="_blank">
+                                    <button class="btn-green">คลิก</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ระบบจองคิวออนไลน์สำหรับร้านค้าหรือคลินิก</td>
+                            <td class="hidden sm:table-cell">โครงงานพิเศษ</td>
+                            <td>
+                                <a href="project_details_lecturer.html" target="_blank">
+                                    <button class="btn-green">คลิก</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ระบบบ้านอัจฉริยะ (Smart Home)</td>
+                            <td class="project_details_lecturer.html">โครงงานพิเศษ</td>
+                            <td>
+                                <a href="project_details_lecturer.html" target="_blank">
+                                    <button class="btn-green">คลิก</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ระบบตรวจจับการบุกรุกในเครือข่าย</td>
+                            <td class="hidden sm:table-cell">โครงงานสหกิจ</td>
+                            <td>
+                                <a href="project_details_lecturer.html" target="_blank">
+                                    <button class="btn-green">คลิก</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>การพยากรณ์ข้อมูลด้วย Machine Learning</td>
+                            <td class="hidden sm:table-cell">โครงงานสหกิจ</td>
+                            <td>
+                                <a href="project_details_lecturer.html" target="_blank">
+                                    <button class="btn-green">คลิก</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+    <!-- Custom Modal for Alert/Confirmation (Instead of alert()) -->
+    <div id="custom-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+            <h4 class="text-lg font-bold mb-4">ข้อความแจ้งเตือน</h4>
+            <p id="modal-message" class="mb-4 text-gray-700"></p>
+            <div class="flex justify-end">
+                <button onclick="document.getElementById('custom-modal').classList.add('hidden')" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                    ตกลง
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Override the built-in alert function to use the custom modal
+        window.alert = function(message) {
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('custom-modal').classList.remove('hidden');
+            document.getElementById('custom-modal').classList.add('flex');
+        };
+    </script>
+</body>
+<footer class="footer flex-shrink-0">
+        <div class="max-w-7xl mx-auto">
+            <p>
+                © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+            </p>
+            <p class="mt-1 text-xs text-gray-300">
+                ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+            </p>
+        </div>
+    </footer>
+</html>

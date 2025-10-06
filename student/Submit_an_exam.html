@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ยื่นสอบโปรเจกต์ - Reg-Project.kmutnb</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/Submit_an_exam.css">
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Main container -->
+    <div class="w-full">
+        <!-- HEADER -->
+         <header class="header">
+            <div class="header-left">
+                <!-- รูปภาพโลโก้ KMUTNB - เปลี่ยนจาก URL ทั่วไปเป็นรูปภาพที่คุณอัปโหลด -->
+                
+                <span class="site-title">Reg-Project.kmutnb</span>
+            </div>
+            <div class="header-right">
+                <!-- รูปภาพโปรไฟล์ -->
+                <img src="https://placehold.co/36x36/f97316/ffffff?text=U" alt="รูปภาพโปรไฟล์" class="profile-img">
+                <span class="user-name hidden lg:block">นักศึกษา</span>
+                
+                <!-- ปุ่มออกจากระบบ (Logout Button) -->
+                <a href="../user.html"  button class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+        
+        <!-- BANNER SECTION: ปรับขนาดเป็น h-40 (160px) บนมือถือ และ md:h-64 (256px) บนเดสก์ท็อป -->
+        <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                 alt="Student Portal Banner" 
+                 class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) - ลบเนื้อหาออกแล้ว -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+        <!-- MAIN LAYOUT: Sidebar and Content -->
+        <div class="main-layout">
+            <!-- SIDEBAR -->
+            <nav class="sidebar hidden md:block">
+                <div class="space-y-2 h-full"> <!-- เพิ่ม h-full เพื่อให้เนื้อหาขยายเต็มความสูง -->
+                    <!-- Updated href attributes to allow linking to different pages -->
+                    <a href="home_page_student.html" class="sidebar-item">
+                        <!-- Home Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                        หน้าหลัก
+                    </a>
+                    <a href="topic.html" class="sidebar-item">
+                        <!-- Topic Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 2H4v8h12V6zm-1 3H5a1 1 0 010-2h10a1 1 0 010 2z" clip-rule="evenodd" /></svg>
+                        เสนอหัวข้อโครงงาน
+                    </a>
+                    <a href="edit_the_topic.html" class="sidebar-item">
+                        <!-- Submit Topic Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v2.167h.465a2 2 0 011.85 2.58l-1.33 4.653A2 2 0 0115.175 17H4.825a2 2 0 01-1.85-2.58l-1.33-4.653a2 2 0 011.85-2.58H4V5zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                        แบบสอบหัวข้อ
+                    </a>
+                    <a href="follow_the_progress.html" class="sidebar-item">
+                        <!-- Progress Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                        ติดตามความคืบหน้า
+                    </a>
+                    <a href="Submit_an_exam.html" class="sidebar-item active">
+                        <!-- Submit Exam (Active) Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+                        ยื่นสอบโปรเจกต์
+                    </a>
+                    <a href="Submit_project_completion.html" class="sidebar-item">
+                        <!-- Submit Completion Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 3a1 1 0 100 2h10a1 1 0 100-2H5z" clip-rule="evenodd" /></svg>
+                        ยื่นจบโปรเจกต์
+                    </a>
+                </div>
+            </nav>
+
+            <!-- CONTENT AREA: Form Section -->
+            <section class="content-area">
+                <h2 class="section-title">ยื่นจบโปรเจค</h2>
+                
+                <form class="upload-card">
+                    <p class="upload-title">อัปโหลดเอกสารสำหรับการสอบ</p>
+
+                    <!-- File Upload Row: Project Book -->
+                    <div class="file-upload-row">
+                        <span class="file-label">เล่มโปรเจกต์ (PDF)</span>
+                        <span id="book-status" class="file-status">ยังไม่ได้แนบไฟล์</span>
+                        
+                        <label for="file-book" class="btn-base btn-upload">
+                            <!-- Upload Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            แนบไฟล์
+                        </label>
+                        <!-- Hidden Input Field for File Upload -->
+                        <input type="file" id="file-book" accept=".pdf" class="hidden-file-input" onchange="updateFileName('file-book', 'book-status', 'file-book-label')">
+                    </div>
+                    
+                    <!-- File Upload Row: Presentation -->
+                    <div class="file-upload-row">
+                        <span class="file-label">Presentation (PDF)</span>
+                        <span id="presentation-status" class="file-status">ยังไม่ได้แนบไฟล์</span>
+                        
+                        <label for="file-presentation" class="btn-base btn-upload">
+                            <!-- Upload Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            แนบไฟล์
+                        </label>
+                        <!-- Hidden Input Field for File Upload -->
+                        <input type="file" id="file-presentation" accept=".pdf,.pptx" class="hidden-file-input" onchange="updateFileName('file-presentation', 'presentation-status', 'file-presentation-label')">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="button" 
+                        class="btn-base btn-submit"
+                        onclick="showSubmissionConfirmation()" 
+                    >
+                        ส่งเอกสารสอบ
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                    <script>
+                    function showSubmissionConfirmation() {
+                        alert('ดำเนินการส่งเรียบร้อย');  
+                    }
+                    </script>
+                </form>
+            </section>
+        </div>
+    </div>
+    
+    <script>
+        /**
+         * Function to update the displayed status with the selected file name.
+         * @param {string} inputId - ID of the file input element.
+         * @param {string} statusId - ID of the span element to display the status.
+         */
+        function updateFileName(inputId, statusId) {
+            const input = document.getElementById(inputId);
+            const status = document.getElementById(statusId);
+            
+            if (input.files.length > 0) {
+                // Display the selected file name and change color to success
+                status.textContent = input.files[0].name;
+                status.style.color = '#059669'; // Tailwind green-700
+                status.style.fontWeight = '500';
+            } else {
+                // Revert to default status
+                status.textContent = 'ยังไม่ได้แนบไฟล์';
+                status.style.color = '#9ca3af'; // Tailwind gray-400
+                status.style.fontWeight = '400';
+            }
+        }
+    </script>
+    <footer class="footer">
+                <div class="max-w-7xl mx-auto">
+                    <p>
+                        © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+                    </p>
+                    <p class="mt-1 text-xs text-gray-300">
+                        ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+                    </p>
+                </div>
+    </footer>
+</body>
+</html>

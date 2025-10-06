@@ -1,0 +1,193 @@
+body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f4f8; /* Light background */
+            /* min-height: 100vh; is now handled by Tailwind classes on body */
+        }
+
+        /* HEADER STYLES (KMUTNB Dark Teal/Blue - Using specific hex for consistency) */
+        .header-kmutnb {
+            background-color: #004d40; /* KMUTNB Dark Teal/Blue */
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* === SIDEBAR STYLES - CLEAN & CONSISTENT (Reused from previous file) === */
+        .sidebar-nav {
+            background-color: #ffffff; 
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            width: 256px; 
+            flex-shrink: 0;
+            position: sticky; 
+            top: 0; 
+            align-self: flex-start;
+            height: calc(100vh - 64px); /* Full height below header on desktop */
+            overflow-y: auto;
+        }
+        .sidebar-item {
+            display: flex; 
+            align-items: center;
+            gap: 0.75rem; 
+            padding: 0.75rem 1.5rem; 
+            cursor: pointer; 
+            color: #4a5568; 
+            transition: background-color 0.2s ease-in-out, color 0.2s; 
+            text-decoration: none;
+            font-weight: 500;
+            position: relative; 
+        }
+        .sidebar-item:hover { 
+            background-color: #e5e7eb; 
+            color: #1f2937; 
+        }
+        .sidebar-item.active { 
+            background-color: #e0f2fe; 
+            color: #1e40af; 
+            font-weight: 600; 
+        }
+        .sidebar-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px; 
+            background-color: #2563eb; 
+            border-radius: 0 4px 4px 0;
+        }
+        .sidebar-item svg {
+            color: currentColor; 
+            transition: color 0.2s ease-in-out;
+        }
+
+        /* CARD AND DETAIL STYLES */
+        .detail-card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f3f4f6; /* Subtle border */
+        }
+        .detail-card-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #1f2937; /* Gray-800 */
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+        }
+        .detail-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+            gap: 1rem;
+        }
+        .detail-text {
+            display: flex;
+            align-items: center;
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 500;
+            color: #4b5563; /* Gray-600 */
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.35rem 1rem;
+            border-radius: 9999px; /* full rounded */
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-left: 0.75rem;
+            min-width: 80px;
+            text-align: center;
+        }
+        .status-pass {
+            background-color: #d1fae5; /* Green-100 */
+            color: #065f46; /* Green-700 */
+        }
+        .status-fail {
+            background-color: #fee2e2; /* Red-100 */
+            color: #991b1b; /* Red-700 */
+        }
+        .status-pending {
+            background-color: #fef3c7; /* Yellow-100 */
+            color: #b45309; /* Amber-700 */
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            width: 200px;
+            max-width: 100%;
+            height: 1.5rem;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin-left: 0.75rem;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #2563eb; /* Blue-600 */
+            transition: width 0.3s ease;
+            position: absolute;
+            left: 0;
+            border-radius: 9999px;
+        }
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: #1f2937; /* Gray-800 */
+            font-weight: 600;
+            font-size: 0.875rem;
+            z-index: 10;
+        }
+
+        /* Button style */
+        .details-button-info {
+            background-color: #2563eb; /* Blue-600 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.15s;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            white-space: nowrap; /* Prevent button text from wrapping */
+        }
+        .details-button-info:hover {
+            background-color: #1d4ed8; /* Blue-700 */
+        }
+        
+        /* Responsive adjustments for Sidebar */
+        @media (max-width: 768px) {
+            .sidebar-nav {
+                /* Mobile specific styles for the sliding menu */
+                position: fixed;
+                top: 64px;
+                left: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+                z-index: 20;
+                width: 75%;
+                max-width: 300px;
+                height: calc(100vh - 64px); 
+            }
+            .sidebar-nav.open {
+                transform: translateX(0);
+                display: block !important; 
+            }
+        }
+        /* FOOTER STYLES */
+        .footer {
+            background-color: #002d25; /* Darker shade of header teal for contrast */
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem; /* text-sm */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db; /* Light gray on hover */
+        }

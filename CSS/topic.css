@@ -1,0 +1,154 @@
+/* BASE STYLES & FONT */
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f4f8; /* Light background */
+        }
+        
+        /* HEADER STYLES (New Definitions) */
+        .header {
+            background-color: #004d40; /* Dark Teal - KMUTNB inspired */
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header-left { display: flex; align-items: center; gap: 0.75rem; }
+        .logo { height: 40px; }
+        .site-title { font-size: 1.25rem; font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 0.75rem; }
+        .user-name { font-size: 0.875rem; }
+
+        .profile-img { 
+            height: 36px; /* กำหนดขนาด */
+            width: 36px;
+            border-radius: 50%; /* ทำให้เป็นวงกลม */
+            object-fit: cover;
+            border: 2px solid #ffffff; /* ขอบสีขาว */
+        }
+
+        /* SIDEBAR STYLES (Custom Classes from User) */
+        .sidebar {
+            background-color: #ffffff;
+            /* Use min-h-screen for full height */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            /* Set a fixed width for desktop */
+            width: 256px; /* w-64 */
+        }
+        .sidebar-item {
+            display: flex; align-items: center; padding: 1rem 1.5rem;
+            cursor: pointer; border-radius: 0.75rem; color: #4a5568;
+            transition: all 0.2s ease-in-out; gap: 1rem;
+        }
+        .sidebar-item:hover { background-color: #e2e8f0; color: #2d3748; }
+        .sidebar-item.active { background-color: #dbeafe; color: #1e40af; font-weight: 600; }
+
+        /* CONTENT FORM STYLES (Updated Padding) */
+        .content-form {
+            /* ปรับ padding ให้มากขึ้นสำหรับหน้าจอใหญ่ */
+            padding: 2rem; 
+            flex-grow: 1; 
+        }
+
+        /* Responsive padding for content area */
+        @media (min-width: 1024px) { /* lg: breakpoint */
+            .content-form {
+                padding: 2.5rem; /* p-10 equivalent for large screens */
+            }
+        }
+
+        .project-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Spacing between sections */
+        }
+        .form-section p {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        /* Grouping for side-by-side fields (วัตถุประสงค์, ขอบเขต) */
+        .form-group-flex {
+            display: flex;
+            flex-direction: column; /* Default stack on mobile */
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) { /* md: breakpoint */
+            .form-group-flex {
+                flex-direction: row; /* Side-by-side on desktop */
+            }
+        }
+        .form-field { flex: 1; }
+        
+        /* INPUT STYLES (New Tailwind-based Definitions for Missing Classes) */
+        .form-input-base {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            background-color: #ffffff;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .form-input-base:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+            outline: none;
+        }
+        
+        /* Custom Input Mapping based on user's original intent */
+        .input-full-width, .textarea-full { height: auto; }
+        .textarea-half, .textarea-full { resize: vertical; min-height: 120px; }
+        .radio-group label {
+            margin-right: 1.5rem;
+            font-weight: 400;
+        }
+
+        /* BUTTON STYLES */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-cancel {
+            background-color: #e53e3e; /* Red */
+            color: white;
+        }
+        .btn-cancel:hover {
+            background-color: #c53030;
+            transform: translateY(-1px);
+        }
+        .btn-submit {
+            background-color: #48bb78; /* Green */
+            color: white;
+        }
+        .btn-submit:hover {
+            background-color: #38a169;
+            transform: translateY(-1px);
+        }
+
+        /* CARD STYLES (สำคัญ: ลบ max-width และ mx-auto เพื่อขยายเต็มพื้นที่) */
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem; 
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 2rem; 
+            width: 100%; /* Ensure it takes full width of its container */
+        }
+                /* FOOTER STYLES */
+        .footer {
+            background-color: #002d25; /* Darker shade of header teal for contrast */
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem; /* text-sm */
+            /* Using inset shadow for a clean separation line */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db; /* Light gray on hover */
+        }

@@ -1,0 +1,134 @@
+/* Variables for Orange-Themed Formal Palette */
+:root {
+    /* *** ปรับปรุงสีหลักเป็นโทนส้ม *** */
+    --primary-orange: #CC5500; /* ส้มเข้ม/ส้มอิฐ: สีหลักของ Header และ Text */
+    --background-light-orange: #FFE5CC; /* พื้นหลังสีส้มอ่อนมาก */
+    
+    --text-color-dark: #333333;
+
+    /* สีเน้น (Accent Colors) ยังคงใช้สีเดิมเพื่อให้ Card มีความแตกต่าง */
+    --student-color: #E67E22; /* ส้มทอง (ใกล้เคียงสีหลัก) */
+    --lecturer-color: #8E44AD; /* ม่วงเข้ม */
+    --officer-color: #27AE60; /* เขียวเข้ม */
+    
+    --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Arial', 'Tahoma', sans-serif;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    /* *** พื้นหลัง: สีส้มอ่อน *** */
+    background-color: var(--background-light-orange); 
+}
+
+/* --- Header Area --- */
+.header {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 50px;
+    font-size: 36px;
+    font-weight: bold;
+    /* *** Header Text: ใช้สีส้มเข้ม *** */
+    color: var(--primary-orange); 
+}
+
+.header span {
+    font-weight: normal;
+    font-size: 28px;
+    color: var(--text-color-dark);
+    display: block;
+    margin-top: 5px;
+}
+
+/* --- Card Container --- */
+.container {
+    display: flex;
+    gap: 50px;
+}
+
+/* --- Card Styling --- */
+.card {
+    width: 220px;
+    height: 270px;
+    background-color: white; /* พื้นหลัง Card ยังคงเป็นสีขาวเพื่อให้ดูสะอาดตา */
+    border-radius: 12px;
+    box-shadow: var(--card-shadow); 
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 3px solid transparent; 
+    overflow: hidden;
+}
+
+/* Base link styling */
+.card a {
+    text-decoration: none;
+    color: var(--text-color-dark); 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 600;
+    padding-top: 15px; 
+}
+
+/* Icon Styling */
+.role-icon {
+    font-size: 56px;
+    margin-bottom: 15px;
+    /* *** Icon Base Color: ใช้สีส้มเข้ม *** */
+    color: var(--primary-orange); 
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* --- Role-Specific Styles & Hover Effects --- */
+
+/* 1. Student Card (สีส้มทอง - โทนเดียวกับพื้นหลัง แต่เข้มกว่า) */
+.card-student:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px var(--student-color); 
+    border-color: var(--student-color);
+}
+.card-student:hover .role-icon, 
+.card-student:hover a {
+    color: var(--student-color);
+}
+.card-student:hover .role-icon {
+    transform: scale(1.1); 
+}
+
+
+/* 2. Lecturer Card (สีม่วงเข้ม) */
+.card-lecturer:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px var(--student-color); 
+    border-color: var(--student-color);
+}
+.card-lecturer:hover .role-icon, 
+.card-lecturer:hover a {
+    color: var(--student-color);
+}
+.card-lecturer:hover .role-icon {
+    transform: scale(1.1);
+}
+
+/* 3. Officer Card (สีเขียวเข้ม) */
+.card-officer:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px var(--student-color); 
+    border-color: var(--student-color);
+}
+.card-officer:hover .role-icon, 
+.card-officer:hover a {
+    color: var(--student-color);
+}
+.card-officer:hover .role-icon {
+    transform: scale(1.1);
+}

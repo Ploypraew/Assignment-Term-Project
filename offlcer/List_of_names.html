@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายชื่อนักศึกษาทั้งหมด - Reg-Project.kmutnb</title>
+    <!-- Load Tailwind CSS from CDN for utility classes and modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Sarabun Font for better Thai readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/List_of_names.css">
+    <!-- Icon Helper Function (using SVG placeholders for Lucide/Font Awesome look) -->
+    <script>
+        // Simple SVG icons for modern look
+        function getIcon(name, classes = 'h-5 w-5') {
+            const strokeColor = classes.includes('text-white') ? 'white' : 'currentColor';
+            const icons = {
+                home: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+                list: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`,
+                user: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+                search: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+            };
+            return icons[name] || '';
+        }
+
+        let currentFilter = 'ทั้งหมด'; // State for active filter
+
+        /**
+         * Changes the active status filter and re-runs the table filter.
+         * @param {string} filter The status value to filter by ('ทั้งหมด', 'สอบจบผ่านโดยสมบูรณ์', 'รอการพิจารณา').
+         * @param {HTMLElement} element The button element clicked.
+         */
+        function changeFilter(filter, element) {
+            currentFilter = filter;
+            
+            // Update active button styling
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gray-700', 'text-white', 'hover:bg-gray-600');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+
+            element.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-emerald-100', 'hover:text-emerald-700', 'hover:bg-amber-100', 'hover:text-amber-700');
+            element.classList.add('bg-gray-700', 'text-white', 'hover:bg-gray-600');
+
+            filterTable();
+        }
+
+        /**
+         * Filters the table rows based on the search input and the current status filter.
+         * This logic handles the rowspan grouping correctly by tracking and hiding subsequent rows.
+         */
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filterText = input.value.toUpperCase();
+            const table = document.getElementById('studentTable');
+            const rows = table.getElementsByTagName('tr');
+            
+            let currentGroupVisibility = true;
+            let groupRowsRemaining = 0; // Tracks how many *secondary* rows in the current group are left to process
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                
+                // 1. Handle Secondary Rows (rows that are part of a multi-row group)
+                if (groupRowsRemaining > 0) {
+                    row.style.display = currentGroupVisibility ? "" : "none";
+                    groupRowsRemaining--;
+                    continue; // Done with this row, move to the next
+                }
+
+                // 2. Handle Primary Rows (rows that contain the project/status cells)
+                
+                // Get primary data cells (Index 2 and 3 only exist on the primary row)
+                const studentId = row.cells[0]?.textContent.toUpperCase() || "";
+                const studentName = row.cells[1]?.textContent.toUpperCase() || "";
+                
+                const projectCell = row.cells[2];
+                const statusCell = row.cells[3];
+
+                const isPrimaryRow = projectCell && statusCell && parseInt(projectCell.rowSpan, 10) >= 1;
+
+                let projectName = "";
+                let statusText = "";
+                let rowspan = 1;
+
+                if (isPrimaryRow) {
+                    // Extract project name and status from the primary row
+                    projectName = projectCell.textContent.toUpperCase() || "";
+                    const badge = statusCell.querySelector('.status-badge');
+                    statusText = badge ? badge.textContent.trim() : statusCell.textContent.trim();
+                    rowspan = parseInt(projectCell.rowSpan, 10);
+                }
+                
+                // --- Match Logic ---
+                
+                // Text Match (Check ID, Name, and Project Name)
+                let textMatch = 
+                    studentId.indexOf(filterText) > -1 ||
+                    studentName.indexOf(filterText) > -1 ||
+                    projectName.indexOf(filterText) > -1;
+
+                // Status Match
+                let statusMatch = (currentFilter === 'ทั้งหมด' || statusText.includes(currentFilter));
+                
+                currentGroupVisibility = textMatch && statusMatch;
+
+                // --- Apply Visibility ---
+                if (currentGroupVisibility) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+                
+                // If it was a multi-row group, set the counter to apply the same visibility to next rows
+                if (rowspan > 1) {
+                    groupRowsRemaining = rowspan - 1;
+                }
+            }
+        }
+
+        // Initialize the filter on page load to apply default 'ทั้งหมด'
+        window.onload = function() {
+            // Re-apply styles to the default active button
+            const allBtn = document.getElementById('filter-all');
+            if (allBtn) {
+                changeFilter('ทั้งหมด', allBtn); // Use the function to set initial state
+            }
+        };
+    </script>
+    
+</head>
+<body>
+    <!-- HEADER -->
+        <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <span class="site-title">Reg-Project.kmutnb</span>
+        </div>
+                <!-- RIGHT SIDE: Profile and Logout Button (header-right) -->
+        <div class="header-right">
+            <!-- รูปภาพโปรไฟล์ -->
+            <img src="https://placehold.co/36x36/f97316/ffffff?text=U" alt="รูปภาพโปรไฟล์" class="profile-img">
+            <span class="user-name hidden lg:block">เจ้าหน้าที่</span>
+            
+            <!-- ปุ่มออกจากระบบ (Logout Button) -->
+            <a href="../user.html" class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md">
+                ออกจากระบบ
+            </a>
+        </div>
+    </header>
+    
+    <!-- BANNER (Simplified) -->
+    <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                onerror="this.onerror=null; this.src='https://placehold.co/1200x256/004d40/ffffff?text=KMUTNB+Project+Banner';"
+                alt="Student Portal Banner" 
+                class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- SIDEBAR (Navigation) -->
+           <aside class="sidebar">
+            <a href="home_page_offlcer.html" class="sidebar-item ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sidebar-icon"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                หน้าหลัก
+            </a>
+            <a href="List_of_names.html" class="sidebar-item selected">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sidebar-icon"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                รายชื่อนักศึกษา
+            </a>
+        </aside>
+
+
+        <!-- CONTENT AREA (Main Data View) -->
+        <section class="content-area">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-8 border-b-2 border-gray-200 pb-3">
+                รายชื่อนักศึกษาทั้งหมด
+            </h2>
+
+            <!-- FILTER & SEARCH CONTROLS -->
+            <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between mb-6 gap-4 p-4 bg-white rounded-xl shadow-md">
+                
+                <!-- Search Input -->
+                <div class="relative flex-grow">
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="ค้นหารหัสนักศึกษา, ชื่อ, หรือชื่อโครงงาน..." 
+                                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-normal shadow-inner">
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <script>document.write(getIcon('search', 'h-5 w-5'));</script>
+                    </span>
+                </div>
+
+                <!-- Status Filters -->
+                <div class="flex flex-wrap justify-start lg:justify-end gap-2 text-sm font-semibold flex-shrink-0">
+                    <button id="filter-all" onclick="changeFilter('ทั้งหมด', this)" 
+                                            class="filter-btn px-4 py-2 rounded-lg transition duration-200 bg-gray-700 text-white hover:bg-gray-600">
+                        ทั้งหมด
+                    </button>
+                    <button onclick="changeFilter('สอบจบผ่านโดยสมบูรณ์', this)" 
+                                            class="filter-btn px-4 py-2 rounded-lg transition duration-200 bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700">
+                        <span class="hidden sm:inline">สถานะ: </span>ผ่าน
+                    </button>
+                    <button onclick="changeFilter('รอการพิจารณา', this)" 
+                                            class="filter-btn px-4 py-2 rounded-lg transition duration-200 bg-gray-200 text-gray-700 hover:bg-amber-100 hover:text-amber-700">
+                        <span class="hidden sm:inline">สถานะ: </span>รอพิจารณา
+                    </button>
+                </div>
+            </div>
+
+                <div class="table-container">
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>รหัสนักศึกษา</th>
+                            <th>ชื่อ - นามสกุล</th>
+                            <!-- ปรับความกว้าง: ลดชื่อโครงงานเป็น 30% เพื่อเพิ่มพื้นที่ให้สถานะ -->
+                            <th style="width: 30%;">ชื่อโครงงาน</th>
+                            <!-- ปรับความกว้าง: เพิ่มสถานะจาก 20% เป็น 30% -->
+                            <th style="width: 30%;">สถานะ</th>
+                        </tr>
+                        <tbody>
+                        <!-- Group 1 (2 students - PASS) -->
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610283</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวเพชรพราว ทวิรสกุล</td>
+                            <td rowspan="2" class="project-cell" data-label="ชื่อโครงงาน:">ระบบจัดการข้อมูลโครงการพิเศษ</td>
+                            <td rowspan="2" class="status-cell" data-label="สถานะ:">
+                                <span class="status-badge status-pass">สอบจบผ่านโดยสมบูรณ์</span>
+                            </td>
+                        </tr>
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610275</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวพลอยแพรว ทวิรสกุล</td>
+                            <!-- Rowspan cells are empty here -->
+                        </tr>
+
+                        <!-- Group 2 (2 students - PASS) -->
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610000</td>  
+                            <td data-label="ชื่อ - นามสกุล:">นายปัญญา ชนะ</td>
+                            <td rowspan="2" class="project-cell" data-label="ชื่อโครงงาน:">ระบบจองคิวออนไลน์สำหรับร้านค้าหรือคลินิก</td>
+                            <td rowspan="2" class="status-cell" data-label="สถานะ:">
+                                <span class="status-badge status-pass">สอบจบผ่านโดยสมบูรณ์</span>
+                            </td>
+                        </tr>
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610001</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวภัสสรา พิรวิชญ์</td>
+                        </tr>
+                        
+                        <!-- Group 3 (2 students - PENDING) -->
+                            <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610401</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวธันย์พร ศรีขาว</td>  
+                            <td rowspan="2" class="project-cell" data-label="ชื่อโครงงาน:">ระบบบ้านอัจฉริยะ (Smart Home)</td>
+                            <td rowspan="2" class="status-cell" data-label="สถานะ:">
+                                <span class="status-badge status-pending">รอการพิจารณา</span>
+                            </td>
+                        </tr>
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610500</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวกัณสสร ศรีวิญ</td>
+                        </tr>
+
+                        <!-- Group 4 (2 students - PENDING) - แก้ไข rowspan เป็น 2 -->
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610501</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวญาดา แก้วใจ</td>    
+                            <td rowspan="2" class="project-cell" data-label="ชื่อโครงงาน:">ระบบตรวจจับการบุกรุกในเครือข่าย</td>
+                            <td rowspan="2" class="status-cell" data-label="สถานะ:">
+                                <span class="status-badge status-pending">รอการพิจารณา</span>
+                            </td>
+                        </tr>
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610502</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวอัญมณี วรวิชญ์</td>
+                        </tr>
+                        
+                        <!-- Group 5 (2 students - PENDING) - แก้ไข rowspan เป็น 2 และข้อมูลถูกต้องตามคำขอ -->
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610501</td>   
+                            <td data-label="ชื่อ - นามสกุล:">นายชัยวัฒน์ มานะ</td>   
+                            <td rowspan="2" class="project-cell" data-label="ชื่อโครงงาน:">การพยากรณ์ข้อมูลด้วย Machine Learning</td>
+                            <td rowspan="2" class="status-cell" data-label="สถานะ:">
+                                <span class="status-badge status-pending">รอการพิจารณา</span>
+                            </td>
+                        </tr>
+                        <tr class="group-row">
+                            <td data-label="รหัสนักศึกษา:">6806022610502</td>
+                            <td data-label="ชื่อ - นามสกุล:">นางสาวนริศรา ภาคภูมิ</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    
+</body>
+<footer class="footer">
+            <div class="max-w-7xl mx-auto">
+                <p>
+                    © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+                </p>
+                <p class="mt-1 text-xs text-gray-300">
+                    ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+                </p>
+            </div>
+</footer>
+</html>

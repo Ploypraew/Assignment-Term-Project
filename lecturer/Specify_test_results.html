@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>กำหนดผลสอบความคืบหน้า - Reg-Project.kmutnb</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Sarabun Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/Specify_test_results.css">
+    <!-- Icon Helper Function -->
+    <script>
+        function getIcon(name, classes = 'h-5 w-5') {
+            const icons = {
+                // Main Icons
+                home: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`,
+                user: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+                menu: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
+                
+                // Project Specific Icons (for Lecturer role)
+                specialProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"></path></svg>`, /* Simple Folder icon */
+
+                coopProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`, /* Briefcase */
+
+                // Logout Icon
+                logOut: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>`,
+
+                // File/Document Icon
+                fileText: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>`,
+            };
+            return icons[name] || '';
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // --- Custom Modal Functions (Replaces alert() and confirm()) ---
+        function showModal(message, type = 'alert', onConfirm = null) {
+            const modal = document.getElementById('custom-modal');
+            const messageEl = document.getElementById('modal-message');
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+            
+            messageEl.textContent = message;
+
+            if (type === 'confirm') {
+                confirmBtn.onclick = () => {
+                    modal.classList.add('hidden');
+                    if (onConfirm) onConfirm(true);
+                };
+                cancelBtn.onclick = () => {
+                    modal.classList.add('hidden');
+                    if (onConfirm) onConfirm(false);
+                };
+                confirmBtn.textContent = 'ยืนยัน';
+                cancelBtn.classList.remove('hidden');
+            } else { // 'alert'
+                confirmBtn.onclick = () => modal.classList.add('hidden');
+                confirmBtn.textContent = 'ตกลง';
+                cancelBtn.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Function to handle the grading buttons
+        function handleGrading(result) {
+            let message = '';
+            let confirmText = '';
+            let buttonColor = 'bg-blue-600';
+            let hoverColor = 'hover:bg-blue-700';
+
+            if (result === 'pass') {
+                message = 'คุณต้องการให้โครงงานนี้ "ผ่าน" ใช่หรือไม่?';
+                confirmText = 'ยืนยันให้ผ่าน';
+                buttonColor = 'bg-green-600';
+                hoverColor = 'hover:bg-green-700';
+            } else if (result === 'revision') {
+                message = 'คุณต้องการให้โครงงานนี้ "ผ่านแบบมีการแก้ไข" ใช่หรือไม่?';
+                confirmText = 'ยืนยันการแก้ไข';
+                buttonColor = 'bg-amber-500';
+                hoverColor = 'hover:bg-amber-600';
+            } else if (result === 'fail') {
+                message = 'คุณต้องการให้โครงงานนี้ "ไม่ผ่าน" ใช่หรือไม่?';
+                confirmText = 'ยืนยันไม่ผ่าน';
+                buttonColor = 'bg-red-600';
+                hoverColor = 'hover:bg-red-700';
+            } else {
+                return;
+            }
+
+            // Update modal button appearance and text
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            confirmBtn.className = `font-semibold py-2 px-4 rounded-lg transition-colors text-white ${buttonColor} ${hoverColor}`;
+            
+            showModal(message, 'confirm', (confirmed) => {
+                // Reset button color
+                confirmBtn.className = 'bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors';
+                
+                if (confirmed) {
+                    console.log('Project graded as:', result);
+                    showModal(`โครงงานถูกกำหนดผลเป็น "${confirmText}" เรียบร้อยแล้ว`, 'alert');
+                    // In a real application, you would submit data to the server here.
+                } else {
+                    console.log('Grading cancelled.');
+                }
+            });
+        }
+
+        // Override the built-in alert/confirm (crucial for Canvas environment)
+        window.alert = (message) => showModal(message, 'alert');
+        window.confirm = (message) => new Promise(resolve => showModal(message, 'confirm', resolve));
+    </script>
+    
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Main container -->
+    <div class="w-full">
+        <!-- HEADER -->
+        <header class="header-kmutnb p-4 flex justify-between items-center sticky top-0 z-30">
+            
+            <!-- Left Side: Menu Toggle (Mobile) and Site Title -->
+            <div class="flex items-center space-x-4">
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleSidebar()" class="text-white md:hidden">
+                    <script>document.write(getIcon('menu'));</script>
+                </button>
+                
+                <!-- Site Title -->
+                <span class="site-title text-xl font-bold">Reg-Project.kmutnb</span>
+            </div>
+
+            <!-- Right Side: Profile and Logout Button -->
+            <div class="flex items-center space-x-3">
+                <!-- Profile Info Group -->
+                <div class="flex items-center space-x-2">
+                    <!-- Profile Image -->
+                    <img src="https://placehold.co/36x36/f97316/ffffff?text=U" 
+                            alt="รูปภาพโปรไฟล์" 
+                            onerror="this.onerror=null;this.src='https://placehold.co/36x36/f97316/ffffff?text=U'"
+                            class="profile-img rounded-full h-9 w-9 border-2 border-white object-cover">
+                    <span class="user-name hidden lg:block text-sm font-medium">อาจารย์</span>
+                </div>
+                
+                <!-- Logout Button -->
+                <a href="../user.html" 
+                   class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md"
+                   role="button">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+        
+        <!-- BANNER SECTION: ปรับขนาดเป็น h-40 (160px) บนมือถือ และ md:h-64 (256px) บนเดสก์ท็อป -->
+        <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                    alt="Student Portal Banner" 
+                    onerror="this.onerror=null;this.src='https://placehold.co/1200x256/004d40/ffffff?text=KMUTNB+Project+Portal'"
+                    class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+        <!-- MAIN LAYOUT: Sidebar and Content -->
+        <div class="flex flex-grow relative">
+            <!-- SIDEBAR - Menu for Lecturer Role (Consistent Structure) -->
+            <nav id="sidebar" class="sidebar w-64 z-20"> 
+                
+                <!-- TOP MENU ITEMS -->
+                <div class="space-y-0.5 pt-4"> 
+                    <!-- 1. หน้าหลัก -->
+                    <a href="home_page_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('home'));</script>หน้าหลัก
+                    </a>
+                    <!-- 2. โครงงานพิเศษ (ACTIVE - Current page context) -->
+                    <a href="special_project_lecturer.html" class="sidebar-item active">
+                        <script>document.write(getIcon('specialProject'));</script>โครงงานพิเศษ
+                    </a>
+                    <!-- 3. โครงงานสหกิจ -->
+                    <a href="cooperative_project_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('coopProject'));</script>โครงงานสหกิจ
+                    </a>
+                </div>
+
+                <!-- BOTTOM MENU ITEM: Logout -->
+                <div class="mt-auto border-t border-gray-100 py-2">
+                    </a>
+                </div>
+            </nav>
+
+            <!-- CONTENT AREA: Specify Test Results Form -->
+            <section class="flex-grow content-area">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">กำหนดผลการสอบความคืบหน้า</h2>
+                
+                <!-- Submission Card -->
+                <div class="submission-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-3">โครงงาน: ระบบจัดการข้อมูลโครงงานพิเศษ</h3>
+                    
+                    <!-- Student/Advisor Info (Added for context) -->
+                    <div class="mb-6 text-base text-gray-600 space-y-1">
+                        <p><span class="font-medium text-gray-700">นักศึกษา:</span> นางสาวเพชรพราว ทวิรสกุล และ นางสาวพลอยแพรว ทวิรสกุล</p>
+                        <p><span class="font-medium text-gray-700">วันที่ยื่นสอบ:</span> 25 ตุลาคม 2568</p>
+                    </div>
+
+                    <!-- Progress Group (UPDATED TO 100%) -->
+                    <div class="mb-8 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                        <h4 class="text-lg font-semibold text-indigo-800 mb-3">ความคืบหน้าปัจจุบัน</h4>
+                        <div class="progress-bar-container">
+                            <!-- Progress Bar: Set width to 100%. Uses green color from CSS for completion -->
+                            <div class="progress-bar" style="width: 100%;"></div> 
+                            <span class="progress-percent text-white">100 %</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Upload/View Section -->
+                    <div class="border-t border-gray-200 pt-6 space-y-4">
+                        <h4 class="text-lg font-semibold text-gray-800">เอกสารที่ใช้ในการสอบ</h4>
+                        
+                        <!-- File Item: Project Book -->
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="font-medium text-gray-700 w-32 flex-shrink-0">เล่มโปรเจค</span>
+                            <input type="text" value="เล่มโปรเจค_ฉบับร่าง.pdf" disabled class="bg-gray-200 p-2 rounded flex-grow text-sm text-gray-700 cursor-default">
+                            <button class="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-sm">
+                                <script>document.write(getIcon('fileText', 'h-4 w-4 mr-1'));</script>ดูไฟล์
+                            </button>
+                        </div>
+                        
+                        <!-- File Item: Presentation -->
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="font-medium text-gray-700 w-32 flex-shrink-0">Presentation</span>
+                            <input type="text" value="Presentation_สอบความคืบหน้า.pdf" disabled class="bg-gray-200 p-2 rounded flex-grow text-sm text-gray-700 cursor-default">
+                            <button class="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-sm">
+                                <script>document.write(getIcon('fileText', 'h-4 w-4 mr-1'));</script>ดูไฟล์
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons Group (Grading) -->
+                    <div class="border-t border-gray-200 pt-6 mt-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">กำหนดผลการสอบ</h4>
+                        <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+                            
+                            <!-- 1. Pass -->
+                            <button 
+                                type="button" 
+                                onclick="handleGrading('pass')"
+                                class="w-full md:w-1/3 py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                                ผ่าน 
+                            </button>
+                            
+                            <!-- 2. Minor Revision -->
+                            <button 
+                                type="button" 
+                                onclick="handleGrading('revision')"
+                                class="w-full md:w-1/3 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                                ผ่านแบบมีการแก้ไข
+                            </button>
+                            
+                            <!-- 3. Fail -->
+                            <button 
+                                type="button" 
+                                onclick="handleGrading('fail')"
+                                class="w-full md:w-1/3 py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                                ไม่ผ่าน 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <a href="project_details_lecturer.html" class="flex justify-center mt-6">
+                    <button 
+                        type="button" 
+                        onclick="history.back()"
+                        class="w-full md:w-1/4 py-3 px-4 bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                    >
+                        ย้อนกลับ
+                    </button>
+                </a>
+            </section>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Alert/Confirmation (Replaces alert() and confirm()) -->
+    <div id="custom-modal" class="fixed inset-0 bg-gray-600 bg-opacity-75 hidden items-center justify-center z-50 transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-100">
+            <h4 class="text-xl font-bold mb-4 text-gray-800">ข้อความแจ้งเตือน</h4>
+            <p id="modal-message" class="mb-6 text-gray-700"></p>
+            <div class="flex justify-end space-x-3">
+                <button id="modal-cancel-btn" class="hidden bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">
+                    ยกเลิก
+                </button>
+                <button id="modal-confirm-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                    ตกลง
+                </button>
+            </div>
+        </div>
+    </div>
+    <footer class="footer flex-shrink-0">
+        <div class="max-w-7xl mx-auto">
+            <p>
+                © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+            </p>
+            <p class="mt-1 text-xs text-gray-300">
+                ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

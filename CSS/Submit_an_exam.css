@@ -1,0 +1,173 @@
+/* BASE STYLES & FONT */
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f4f8; /* Light background */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER STYLES */
+        .header {
+            background-color: #004d40; /* Dark Teal - KMUTNB inspired */
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header-left { display: flex; align-items: center; gap: 0.75rem; }
+        .logo { height: 40px; }
+        .site-title { font-size: 1.25rem; font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 0.75rem; }
+        .user-name { font-size: 0.875rem; }
+
+        .profile-img { 
+            height: 36px; /* กำหนดขนาด */
+            width: 36px;
+            border-radius: 50%; /* ทำให้เป็นวงกลม */
+            object-fit: cover;
+            border: 2px solid #ffffff; /* ขอบสีขาว */
+        }
+
+
+        /* SIDEBAR STYLES */
+        .main-layout { display: flex; flex-grow: 1; }
+        .sidebar {
+            background-color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            width: 256px; /* w-64 */
+            padding: 1rem;
+            min-height: 100vh; /* ทำให้มีความสูงเต็ม viewport */
+        }
+        .sidebar-item {
+            display: flex; align-items: center; padding: 1rem 1.5rem;
+            cursor: pointer; border-radius: 0.75rem; color: #4a5568;
+            transition: all 0.2s ease-in-out; gap: 1rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .sidebar-item:hover { background-color: #e2e8f0; color: #2d3748; }
+        .sidebar-item.active { background-color: #dbeafe; color: #1e40af; font-weight: 600; }
+
+        /* CONTENT AREA */
+        .content-area {
+            flex-grow: 1;
+            padding: 2rem;
+            background-color: #f0f4f8;
+        }
+        .section-title {
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: #1f2937; 
+            margin-bottom: 1.5rem;
+        }
+
+        /* UPLOAD CARD STYLES */
+        .upload-card {
+            background-color: #ffffff;
+            border-radius: 1rem; 
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 2rem; 
+            max-width: 600px;
+            width: 100%;
+        }
+        .upload-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.75rem;
+        }
+        .file-upload-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .file-label {
+            font-weight: 500;
+            color: #374151;
+            flex-grow: 1;
+        }
+        
+        .file-status {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin-right: 1rem;
+        }
+
+        /* BUTTON STYLES */
+        .btn-base {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-upload {
+            background-color: #10b981; /* Emerald Green */
+            color: white;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+        }
+        .btn-upload:hover {
+            background-color: #059669;
+            transform: translateY(-1px);
+        }
+        .btn-submit {
+            background-color: #3b82f6; /* Blue */
+            color: white;
+            padding: 0.75rem 2rem;
+            margin-top: 2rem;
+            width: 100%;
+            font-size: 1.125rem;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+        .btn-submit:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        /* Utility for hiding file input visually */
+        .hidden-file-input {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+        
+        /* Responsive adjustments for sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .content-area {
+                padding: 1rem;
+            }
+            .upload-card {
+                max-width: 100%;
+            }
+        }
+        /* FOOTER STYLES */
+        .footer {
+            background-color: #002d25; /* Darker shade of header teal for contrast */
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem; /* text-sm */
+            /* Using inset shadow for a clean separation line */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db; /* Light gray on hover */
+        }

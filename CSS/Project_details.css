@@ -1,0 +1,462 @@
+        /* ตัวแปรสีสำหรับการออกแบบ */
+        :root {
+            --kmutnb-red: #8b0000;
+            --brand-dark-blue: #1a375e;
+            --header-dark-teal: #004d40; /* สีเขียวเข้มสำหรับ Header */
+            --active-blue: #0ea5e9; /* Sky blue/Cyan */
+            --active-bg-light: #e0f2fe; 
+            --main-bg: #f7f9fc;
+            --sidebar-bg: #ffffff;
+            --text-color: #1f2937; 
+            --text-secondary: #4b5563;
+            --detail-bg: #ffffff;
+            --input-border: #e5e7eb; 
+            --button-submit-bg: #059669; /* เขียวสำหรับปุ่มยืนยัน */
+            --status-passed: #059669;
+            --status-progress: #f59e0b;
+            --shadow-lift: 0 10px 20px rgba(0, 0, 0, 0.08); 
+            --shadow-sidebar: 2px 0 10px rgba(0, 0, 0, 0.05);
+            /* กำหนดความสูงขององค์ประกอบคงที่ */
+            --header-height: 64px;
+            --banner-height-mobile: 160px; /* h-40 */
+            --banner-height-desktop: 256px; /* md:h-64 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--main-bg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* ------------------------------------ Header (Dark Teal) ------------------------------------ */
+        header {
+            background-color: var(--header-dark-teal); 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: var(--header-height);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 0.75rem; }
+        .site-title { font-size: 1.25rem; font-weight: 600; color: white;}
+        .header-right { display: flex; align-items: center; gap: 0.75rem; }
+        .user-name { font-size: 0.875rem; color: white; }
+
+        /* สไตล์สำหรับรูปภาพโปรไฟล์ */
+        .profile-img { 
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffffff; 
+        }
+
+        h1 {
+            font-size: 1.4em;
+            color: white;
+            font-weight: 700;
+        }
+        
+        /* ------------------------------------ Banner Section (NEW: Responsive Height) ------------------------------------ */
+        .banner-section {
+            width: 100%;
+            height: var(--banner-height-mobile); /* Mobile height: 160px */
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .banner-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        
+        .banner-overlay {
+             position: absolute;
+             inset: 0;
+             display: flex;
+             flex-direction: column;
+             align-items: flex-start;
+             justify-content: center;
+             padding: 2rem;
+             background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        /* ------------------------------------ Main Content & Sidebar ------------------------------------ */
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            /* Mobile Calculation: 100vh - Header(64px) - Banner(160px) */
+            min-height: calc(100vh - var(--header-height) - var(--banner-height-mobile));
+        }
+
+        .sidebar {
+            width: 300px;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--sidebar-bg); 
+            box-shadow: var(--shadow-sidebar);
+            flex-shrink: 0;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            margin: 0.25rem 0.75rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+            gap: 0.5rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+        }
+
+        .sidebar-item.selected { /* ใช้ selected สำหรับรายการที่ถูกเลือก */
+            background-color: var(--active-bg-light);
+            color: var(--active-blue);
+            font-weight: 600;
+            border-left: 4px solid var(--active-blue);
+            padding-left: calc(1.5rem - 4px);
+            box-shadow: 0 2px 8px rgba(14, 165, 236, 0.15);
+        }
+        
+        .sidebar-item.selected .sidebar-icon {
+            color: var(--active-blue);
+        }
+
+        /* ------------------------------------ Content Area (Details Card) ------------------------------------ */
+        .content-area {
+            flex-grow: 1;
+            padding: 40px; 
+            background-color: var(--main-bg);
+            overflow-y: auto;
+        }
+
+        .detail-box {
+            background-color: var(--detail-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lift); 
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 25px;
+            color: var(--brand-dark-blue);
+            border-bottom: 2px solid var(--active-bg-light); 
+            padding-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .info-group {
+            margin-bottom: 30px;
+            padding: 15px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .info-group:last-of-type {
+            border-bottom: none;
+        }
+
+        .info-group p {
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .info-group strong {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 1.15em;
+        }
+
+        /* แก้ไขสไตล์สมาชิกกลุ่ม */
+        .member-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-left: 0;
+            margin-top: 5px;
+            color: var(--text-secondary);
+        }
+
+        /* ------------------ อาจารย์กรรมการ Inputs ------------------ */
+        .advisor-input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .info-group input[type="text"] {
+            width: 100%;
+            max-width: none;
+            padding: 10px 15px;
+            margin: 0;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 1em;
+            height: 44px; 
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .info-group input[type="text"]:focus {
+            border-color: var(--active-blue);
+            box-shadow: 0 0 0 3px rgba(14, 165, 236, 0.15);
+            outline: none;
+        }
+
+
+        /* ------------------ วันที่และห้องสอบ ------------------ */
+        .date-and-room-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 15px; 
+            background-color: var(--active-bg-light); 
+            border-radius: 12px;
+        }
+        .date-box label, .room-input-group label {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--brand-dark-blue);
+            display: block;
+        }
+
+        .date-box input[type="date"], .room-input-group input[type="text"] {
+            width: 100%;
+            border: 1px solid var(--input-border);
+            padding: 10px 15px;
+            background-color: var(--sidebar-bg);
+            font-size: 1em;
+            height: 44px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .date-box input[type="date"]:focus, .room-input-group input[type="text"]:focus {
+            border-color: var(--active-blue);
+            box-shadow: 0 0 0 3px rgba(14, 165, 236, 0.15);
+            outline: none;
+        }
+
+        /* ------------------ ตารางสถานะ ------------------ */
+        .status-table-container {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lift);
+        }
+
+        .status-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1em;
+        }
+
+        .status-table-container th, .status-table-container td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: left;
+        }
+
+        .status-table-container th {
+            background-color: var(--brand-dark-blue);
+            color: var(--sidebar-bg); 
+            font-weight: 700;
+            width: 50%;
+        }
+        .status-table-container tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-table-container td:last-child {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .status-passed {
+            color: var(--status-passed);
+            background-color: #e6ffed;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        .status-progress {
+            color: var(--status-progress);
+            background-color: #fffbeb;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        /* ------------------ ปุ่มดำเนินการ ------------------ */
+        .action-button-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .action-button-container p {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--text-color);
+        }
+
+        /* Style for both button and link used as a button */
+        .submit-button {
+            display: inline-block;
+            background-color: var(--button-submit-bg);
+            color: white;
+            padding: 12px 25px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 6px rgba(5, 150, 105, 0.2);
+            border: none;
+            text-decoration: none;
+        }
+
+        .submit-button:hover {
+            background-color: #047857;
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 10px rgba(5, 150, 105, 0.4); 
+        }
+        
+        /* Custom style for the Logout Button in the header (Fixing the use of undeclared Tailwind classes) */
+        .logout-button {
+            display: inline-block;
+            background-color: var(--kmutnb-red); /* KMUTNB Red for contrast/danger */
+            color: white;
+            padding: 6px 12px; 
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px; 
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            border: none;
+        }
+        .logout-button:hover {
+            background-color: #a30000; /* Darker red on hover */
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ------------------------------------ Responsive Design ------------------------------------ */
+        /* ปรับความสูงของ Main Content บน Desktop */
+        @media (min-width: 768px) {
+            .banner-section {
+                height: var(--banner-height-desktop); /* Desktop height: 256px */
+            }
+            .main-content {
+                /* Desktop Calculation: 100vh - Header(64px) - Banner(256px) */
+                min-height: calc(100vh - var(--header-height) - var(--banner-height-desktop));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                height: 56px;
+                padding: 0 15px;
+            }
+            .main-content {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                justify-content: start; 
+                overflow-x: auto;
+                border-bottom: 1px solid #eee;
+                padding: 0.5rem 0; /* Adjust padding for horizontal scroll */
+            }
+            .sidebar-item {
+                flex-shrink: 0;
+            }
+            .sidebar-item.selected {
+                border-left: none;
+                border-bottom: 3px solid var(--active-blue);
+                padding-left: 1.5rem; /* Reset left padding after border adjustment */
+                margin-bottom: -1px; /* To cover the bottom border of sidebar */
+            }
+            .content-area {
+                padding: 15px;
+            }
+            .advisor-input-grid {
+                grid-template-columns: 1fr;
+            }
+            .date-and-room-container {
+                grid-template-columns: 1fr;
+            }
+            .action-button-container {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+        }
+        /* FOOTER STYLES */
+        .footer {
+            background-color: #002d25; /* Darker shade of header teal for contrast */
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem; /* text-sm */
+            /* Using inset shadow for a clean separation line */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db; /* Light gray on hover */
+        }
+        .form-input-base {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            background-color: #ffffff;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .form-input-base:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+            outline: none;
+        }   

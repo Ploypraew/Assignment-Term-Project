@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฟอร์มการยื่นขอแก้ไขหัวข้อ - Reg-Project.kmutnb</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/edit_the_topic.css">
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Main container takes full height and is a column flex -->
+    <div class="w-full">
+        <!-- HEADER -->
+        <header class="header">
+          <div class="header-left">
+                <!-- รูปภาพโลโก้ KMUTNB - เปลี่ยนจาก URL ทั่วไปเป็นรูปภาพที่คุณอัปโหลด -->
+                
+                <span class="site-title">Reg-Project.kmutnb</span>
+            </div>
+            <div class="header-right">
+                <!-- รูปภาพโปรไฟล์ -->
+                <img src="https://placehold.co/36x36/f97316/ffffff?text=U" alt="รูปภาพโปรไฟล์" class="profile-img">
+                <span class="user-name hidden lg:block">นักศึกษา</span>
+                
+                <!-- ปุ่มออกจากระบบ (Logout Button) -->
+                <a href="../user.html"  button class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+
+        <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                 alt="Student Portal Banner" 
+                 class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) - ลบเนื้อหาออกแล้ว -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT WRAPPER: Flex row for Sidebar and Content -->
+        <!-- เพิ่ม min-h-[calc(100vh-56px)] เพื่อให้เนื้อหาหลักเต็มความสูงที่เหลือหลังจากหัก Header ออก -->
+        <div class="main-content-wrapper flex min-h-[calc(100vh-56px)]">
+            
+            <!-- SIDEBAR (Fixed width, full height) -->
+            <nav class="sidebar hidden md:block w-64 p-4 sticky top-0">
+                <div class="space-y-2">
+                    <a href="home_page_student.html" class="sidebar-item ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                        หน้าหลัก
+                    </a>
+                    <a href="topic.html" class="sidebar-item active">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 2H4v8h12V6zm-1 3H5a1 1 0 010-2h10a1 1 0 010 2z" clip-rule="evenodd" /></svg>
+                        เสนอหัวข้อโครงงาน
+                    </a>
+                    <a href="submit_a_topic.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v2.167h.465a2 2 0 011.85 2.58l-1.33 4.653A2 2 0 0115.175 17H4.825a2 2 0 01-1.85-2.58l-1.33-4.653a2 2 0 011.85-2.58H4V5zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                        ยื่นสอบหัวข้อ
+                    </a>
+                    <a href="follow_the_progress.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                        ติดตามความคืบหน้า
+                    </a>
+                    <a href="Submit_an_exam.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+                        ยื่นสอบโปรเจกต์
+                    </a>
+                    <a href="Submit_project_completion.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 3a1 1 0 100 2h10a1 1 0 100-2H5z" clip-rule="evenodd" /></svg>
+                        ยื่นจบโปรเจกต์
+                    </a>
+                </div>
+            </nav>
+
+            <!-- MAIN CONTENT AREA: ใช้ flex-grow เพื่อขยายเต็มพื้นที่ -->
+            <main class="content-form">
+                <!-- Card Container for the form. ลบคลาส max-w-4xl mx-auto ออก -->
+                <div class="card">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-3">
+                        ฟอร์มการยื่นขอเสนอหัวข้อ
+                    </h2>
+    
+                    <form class="project-form" onsubmit="event.preventDefault(); alert('ฟอร์มถูกส่งแล้ว');">
+                        
+                        <!-- ชื่อสมาชิกในกลุ่ม (ไทย) -->
+                        <script>
+                        /**
+                         * ฟังก์ชันตรวจสอบการกดแป้นพิมพ์: อนุญาตเฉพาะตัวอักษรและช่องว่างตามภาษาที่กำหนด
+                         */
+                        function validateText(event, lang) {
+                            const key = event.key;
+                            let pattern;
+
+                            if (lang === 'th') {
+                                // อนุญาต: อักษรไทย (ก-ฮ), สระ, วรรณยุกต์ และช่องว่างเท่านั้น (ไม่รวมตัวเลขไทย)
+                                // ใช้ onkeypress เพื่อป้องกันการพิมพ์ตัวเลขไทยและอังกฤษทันที
+                                pattern = /^[ก-ฮเ-าๆฯ-ำะ-ูิ-ีั-์\s]+$/; 
+                            } else if (lang === 'en') {
+                                // อนุญาต: อักษร A-Z, a-z และช่องว่างเท่านั้น
+                                pattern = /^[A-Za-z\s]+$/;
+                            } else {
+                                return true;
+                            }
+
+                            // หากตัวอักษรที่พิมพ์เป็นตัวอักษรเดี่ยว (ไม่ใช่ปุ่มควบคุม เช่น Backspace, Tab)
+                            // และไม่ตรงตามรูปแบบที่อนุญาต ให้ยกเลิกการพิมพ์
+                            if (key.length === 1 && !pattern.test(key)) {
+                                // ตรวจสอบเฉพาะตัวอักษรที่พิมพ์ใหม่ ไม่ใช่ทั้งข้อความในช่อง
+                                // เราจะใช้วิธีที่ง่ายกว่าคือการระบุสิ่งที่ 'ห้าม' (Deny List)
+                                const denyPattern = /[0-9๐-๙]/; // ห้ามตัวเลขไทยและอังกฤษ
+
+                                if (denyPattern.test(key)) {
+                                    event.preventDefault();
+                                    return false;
+                                }
+                            }
+                            
+                            // สำหรับอักษรไทยที่ซับซ้อน จะใช้การตรวจสอบด้วย pattern ใน HTML5 เป็นหลัก
+                            return true;
+                        }
+                    </script>
+
+                    <div class="form-section">
+                        <p>ชื่อ-นามสกุล (ภาษาไทย)</p>
+                        <input type="text" class="form-input-base input-full-width" 
+                            placeholder="ชื่อ-นามสกุล นักศึกษาคนที่ 1"
+                            pattern="[ก-ฮเ-าๆฯ-ำะ-ูิ-ีั-์\s]+" 
+                            title="กรุณากรอกเฉพาะตัวอักษรภาษาไทยและช่องว่างเท่านั้น (ห้ามตัวเลข)"
+                            onkeypress="return validateText(event, 'th')"
+                            oninput="this.value = this.value.replace(/[0-9๐-๙]/g, '')"> </div>
+                    <div class="form-section">
+                        <p>ชื่อ-นามสกุล (ภาษาไทย)</p>
+                        <input type="text" class="form-input-base input-full-width" 
+                            placeholder="ชื่อ-นามสกุล นักศึกษาคนที่ 2"
+                            pattern="[ก-ฮเ-าๆฯ-ำะ-ูิ-ีั-์\s]+" 
+                            title="กรุณากรอกเฉพาะตัวอักษรภาษาไทยและช่องว่างเท่านั้น (ห้ามตัวเลข)"
+                            onkeypress="return validateText(event, 'th')"
+                            oninput="this.value = this.value.replace(/[0-9๐-๙]/g, '')">
+                    </div>
+
+                    <div class="form-section">
+                        <p>ชื่อ-นามสกุล (ภาษาอังกฤษ)</p>
+                        <input type="text" class="form-input-base input-full-width" 
+                            placeholder="Full Name of Student 1 "
+                            pattern="[A-Za-z\s]+" 
+                            title="Please enter only English letters and spaces. (No numbers)"
+                            onkeypress="return validateText(event, 'en')"
+                            oninput="this.value = this.value.replace(/[0-9๐-๙]/g, '')"> </div>
+                    <div class="form-section">
+                        <p>ชื่อ-นามสกุล (ภาษาอังกฤษ)</p>
+                        <input type="text" class="form-input-base input-full-width" 
+                            placeholder="Full Name of Student 2"
+                            pattern="[A-Za-z\s]+" 
+                            title="Please enter only English letters and spaces. (No numbers)"
+                            onkeypress="return validateText(event, 'en')"
+                            oninput="this.value = this.value.replace(/[0-9๐-๙]/g, '')">
+                    </div>
+
+                        <!-- สาขา -->
+                        <div class="form-section">
+                            <p>สาขา</p>
+                            <div class="radio-group flex flex-wrap gap-4 mt-2">
+                                <label><input type="radio" name="branch" value="IT" class="mr-1"> IT</label>
+                                <label><input type="radio" name="branch" value="ITI" class="mr-1"> ITI</label>
+                                <label><input type="radio" name="branch" value="INE" class="mr-1"> INE</label>
+                                <label><input type="radio" name="branch" value="INET" class="mr-1"> INET</label>
+                                <label><input type="radio" name="branch" value="ITT" class="mr-1"> ITT</label>
+                            </div>
+                        </div>
+                        
+                        <!-- หัวข้อ -->
+                        <div class="form-section">
+                            <p>หัวข้อโครงงาน (ภาษาไทย)</p>
+                            <input type="text" class="form-input-base input-full-width" placeholder="ชื่อหัวข้อโครงงานเป็นภาษาไทย">
+                        </div>
+
+                        <div class="form-section">
+                            <p>กรณีศึกษา (ภาษาไทย)</p>
+                            <input type="text" class="form-input-base input-full-width" placeholder="ชื่อหัวข้อโครงงานเป็นภาษาไทย">
+                        </div>
+
+                        <div class="form-section">
+                            <p>หัวข้อโครงงาน (ภาษาอังกฤษ)</p>
+                            <input type="text" class="form-input-base input-full-width" placeholder="ชื่อหัวข้อโครงงานเป็นภาษาไทย">
+                        </div>
+
+                        <div class="form-section">
+                            <p>กรณีศึกษา (ภาษาอังกฤษ)</p>
+                            <input type="text" class="form-input-base input-full-width" placeholder="ชื่อหัวข้อโครงงานเป็นภาษาไทย">
+                        </div>
+    
+                        <!-- วัตถุประสงค์ & ขอบเขตของโครงงาน (Side by Side on Desktop) -->
+                        <div class="form-group-flex">
+                            <div class="form-field">
+                                <p>วัตถุประสงค์</p>
+                                <textarea class="form-input-base textarea-half" placeholder="ระบุวัตถุประสงค์ของโครงงาน"></textarea>
+                            </div>
+                            <div class="form-field">
+                                <p>ขอบเขตของโครงงาน</p>
+                                <textarea class="form-input-base textarea-half" placeholder="ระบุขอบเขต"></textarea>
+                            </div>
+                        </div>
+    
+                        <!-- รายละเอียดโครงงาน -->
+                        <div class="form-section">
+                            <p>รายละเอียดโครงงาน </p>
+                            <textarea class="form-input-base textarea-full" rows="5" placeholder="อธิบายแนวคิด"></textarea>
+                        </div>
+    
+                        <!-- อาจารย์ที่ปรึกษา -->
+                        <div class="form-section">
+                        <p>อาจารย์ที่ปรึกษา</p>
+                        <select class="form-input-base input-full-width" name="advisor">
+                            <option value="" disabled selected>--- เลือกชื่ออาจารย์ที่ปรึกษา ---</option>
+                            
+                            <option value="รศ.ดร.อนิราช มิ่งขวัญ">รศ.ดร.อนิราช มิ่งขวัญ</option>
+                            <option value="ผศ.อรบุษป์ วุฒิกมลชัย">ผศ.อรบุษป์ วุฒิกมลชัย</option>
+                            <option value="ผศ.ดร.บีสุดา ดาวเรือง">ผศ.ดร.บีสุดา ดาวเรือง</option>
+                            <option value="ผศ.ดร.ขนิษฐา นามี">ผศ.ดร.ขนิษฐา นามี</option>
+                            <option value="อ.ดร.กาญจน ณ ศรีธะ">อ.ดร.กาญจน ณ ศรีธะ</option>
+                            <option value="ผศ.นพดล บูรณ์กุศล">ผศ.นพดล บูรณ์กุศล</option>
+                            <option value="ผศ.จสต.นพเก้า ทองใบ">ผศ.จสต.นพเก้า ทองใบ</option>
+                            <option value="ผศ.ดร.นิติการ นาคเจือทอง">ผศ.ดร.นิติการ นาคเจือทอง</option>
+                            <option value="ผศ.ดร.นัฎฐพันธ์ นาคพงษ์">ผศ.ดร.นัฎฐพันธ์ นาคพงษ์</option>
+                            <option value="ผศ.นิมิต ศรีคำทา">ผศ.นิมิต ศรีคำทา</option>
+                            <option value="อ.ดร.พิทย์พิมล ชูรอด">อ.ดร.พิทย์พิมล ชูรอด</option>
+                            <option value="ผศ.ดร.พาฝัน ดวงไพศาล">ผศ.ดร.พาฝัน ดวงไพศาล</option>
+                            <option value="อ.ดร.ประดิษฐ์ พิทักษ์เสถียรกุล">อ.ดร.ประดิษฐ์ พิทักษ์เสถียรกุล</option>
+                            <option value="ผศ.พีระศักดิ์ เสรีกุล">ผศ.พีระศักดิ์ เสรีกุล</option>
+                            <option value="ผศ.สมชัย เชียงพงศ์พันธุ์">ผศ.สมชัย เชียงพงศ์พันธุ์</option>
+                            <option value="ผศ.ดร.สุปีติ กุลจันทร์">ผศ.ดร.สุปีติ กุลจันทร์</option>
+                            <option value="ผศ.สิวาลัย จินเจือ">ผศ.สิวาลัย จินเจือ</option>
+                            <option value="ผศ.ดร.สุพาภรณ์ ซิ้มเจริญ">ผศ.ดร.สุพาภรณ์ ซิ้มเจริญ</option>
+                            <option value="ผศ.ดร.ศรายุทธ ธเนศสกุลวัฒนา">ผศ.ดร.ศรายุทธ ธเนศสกุลวัฒนา</option>
+                            <option value="อ.ดร.ศิรินทรา แว่วศรี">อ.ดร.ศิรินทรา แว่วศรี</option>
+                            <option value="อ.ดร.วัชรชัย คงศิริวัฒนา">อ.ดร.วัชรชัย คงศิริวัฒนา</option>
+                            <option value="ผศ.ดร.วันทนี ประจวบศุภกิจ">ผศ.ดร.วันทนี ประจวบศุภกิจ</option>
+                            <option value="รศ.ดร.ยุพิน สรรพคุณ">รศ.ดร.ยุพิน สรรพคุณ</option>
+                        </select> <br><br>
+                        <select class="form-input-base input-full-width" name="advisor">
+                            <option value="" disabled selected>--- เลือกชื่ออาจารย์ที่ปรึกษาร่วม ---</option>
+                            <option value="ไม่มี">ไม่มี</option>
+                            <option value="รศ.ดร.อนิราช มิ่งขวัญ">รศ.ดร.อนิราช มิ่งขวัญ</option>
+                            <option value="ผศ.อรบุษป์ วุฒิกมลชัย">ผศ.อรบุษป์ วุฒิกมลชัย</option>
+                            <option value="ผศ.ดร.บีสุดา ดาวเรือง">ผศ.ดร.บีสุดา ดาวเรือง</option>
+                            <option value="ผศ.ดร.ขนิษฐา นามี">ผศ.ดร.ขนิษฐา นามี</option>
+                            <option value="อ.ดร.กาญจน ณ ศรีธะ">อ.ดร.กาญจน ณ ศรีธะ</option>
+                            <option value="ผศ.นพดล บูรณ์กุศล">ผศ.นพดล บูรณ์กุศล</option>
+                            <option value="ผศ.จสต.นพเก้า ทองใบ">ผศ.จสต.นพเก้า ทองใบ</option>
+                            <option value="ผศ.ดร.นิติการ นาคเจือทอง">ผศ.ดร.นิติการ นาคเจือทอง</option>
+                            <option value="ผศ.ดร.นัฎฐพันธ์ นาคพงษ์">ผศ.ดร.นัฎฐพันธ์ นาคพงษ์</option>
+                            <option value="ผศ.นิมิต ศรีคำทา">ผศ.นิมิต ศรีคำทา</option>
+                            <option value="อ.ดร.พิทย์พิมล ชูรอด">อ.ดร.พิทย์พิมล ชูรอด</option>
+                            <option value="ผศ.ดร.พาฝัน ดวงไพศาล">ผศ.ดร.พาฝัน ดวงไพศาล</option>
+                            <option value="อ.ดร.ประดิษฐ์ พิทักษ์เสถียรกุล">อ.ดร.ประดิษฐ์ พิทักษ์เสถียรกุล</option>
+                            <option value="ผศ.พีระศักดิ์ เสรีกุล">ผศ.พีระศักดิ์ เสรีกุล</option>
+                            <option value="ผศ.สมชัย เชียงพงศ์พันธุ์">ผศ.สมชัย เชียงพงศ์พันธุ์</option>
+                            <option value="ผศ.ดร.สุปีติ กุลจันทร์">ผศ.ดร.สุปีติ กุลจันทร์</option>
+                            <option value="ผศ.สิวาลัย จินเจือ">ผศ.สิวาลัย จินเจือ</option>
+                            <option value="ผศ.ดร.สุพาภรณ์ ซิ้มเจริญ">ผศ.ดร.สุพาภรณ์ ซิ้มเจริญ</option>
+                            <option value="ผศ.ดร.ศรายุทธ ธเนศสกุลวัฒนา">ผศ.ดร.ศรายุทธ ธเนศสกุลวัฒนา</option>
+                            <option value="อ.ดร.ศิรินทรา แว่วศรี">อ.ดร.ศิรินทรา แว่วศรี</option>
+                            <option value="อ.ดร.วัชรชัย คงศิริวัฒนา">อ.ดร.วัชรชัย คงศิริวัฒนา</option>
+                            <option value="ผศ.ดร.วันทนี ประจวบศุภกิจ">ผศ.ดร.วันทนี ประจวบศุภกิจ</option>
+                            <option value="รศ.ดร.ยุพิน สรรพคุณ">รศ.ดร.ยุพิน สรรพคุณ</option>
+                        </select>
+                    </div>
+                    
+                        <!-- ปุ่มดำเนินการ -->
+                        <div class="form-actions pt-4 flex justify-end gap-3">
+                            <!-- ใช้ justify-end เพื่อจัดปุ่มไปทางขวา -->
+                            <button type="submit" class="btn btn-submit">ส่งแบบฟอร์ม</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+        <footer class="footer">
+            <div class="max-w-7xl mx-auto">
+                <p>
+                    © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+                </p>
+                <p class="mt-1 text-xs text-gray-300">
+                    ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+                </p>
+            </div>
+        </footer>
+</html>

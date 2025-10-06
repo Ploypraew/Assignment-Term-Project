@@ -1,0 +1,100 @@
+/* BASE STYLES & FONT */
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f4f8; /* Light background */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER STYLES (KMUTNB Dark Teal/Blue) */
+        .header {
+            background-color: #004d40; 
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-img { 
+            height: 36px; /* กำหนดขนาด */
+            width: 36px;
+            border-radius: 50%; /* ทำให้เป็นวงกลม */
+            object-fit: cover;
+            border: 2px solid #ffffff; /* ขอบสีขาว */
+        }
+        
+        /* SIDEBAR STYLES - Ensures full viewport height */
+        .sidebar {
+            background-color: #ffffff;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            min-height: 100vh; /* ทำให้มีความสูงเต็ม viewport */
+        }
+        .sidebar-item {
+            display: flex; align-items: center; padding: 1rem 1.5rem;
+            cursor: pointer; border-radius: 0.75rem; color: #4a5568;
+            transition: all 0.2s ease-in-out; gap: 1rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .sidebar-item:hover { background-color: #e2e8f0; color: #2d3748; }
+        
+        /* * START: ACTIVE ITEM STYLES MODIFICATION 
+         * เปลี่ยนจากโทนสีส้ม (fef3c7, d97706, f97316) เป็นโทนสีน้ำเงิน (Blue)
+         * เพื่อให้ตรงกับแถบเมนูที่ถูกเลือก (Active) ในภาพตัวอย่าง
+         */
+        .sidebar-item.active { 
+            background-color: #dbeafe; /* Tailwind blue-100 */
+            color: #1e40af; /* Tailwind blue-700 */
+            font-weight: 700;
+            border-left: 4px solid #dbeafe; /* Tailwind blue-500 accent bar */
+        }
+        /* END: ACTIVE ITEM STYLES MODIFICATION */
+
+        /* CARD STYLES */
+        .info-card {
+            background-color: #ffffff;
+            border-radius: 1rem; 
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 2rem; 
+            margin-bottom: 1.5rem;
+        }
+
+        /* PROGRESS BAR CUSTOM STYLE */
+        .progress-bar {
+            height: 2.5rem;
+            border-radius: 9999px; /* Full rounded */
+            background-color: #10b981; /* Emerald Green for 100% completion */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* UTILITY FOR HIDING FILE INPUT */
+        .hidden-file-input {
+            width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .content-area {
+                padding: 1rem;
+            }
+        }
+        .footer {
+            background-color: #002d25; /* Darker shade of header teal for contrast */
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem; /* text-sm */
+            /* Using inset shadow for a clean separation line */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db; /* Light gray on hover */
+        }

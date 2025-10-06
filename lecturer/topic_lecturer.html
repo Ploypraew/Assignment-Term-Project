@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตรวจสอบหัวข้อโครงงาน - Reg-Project.kmutnb</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Sarabun Font (Recommended for Thai text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/topic_lecturer.css">
+    <!-- Icon Helper Function -->
+    <script>
+        function getIcon(name, classes = 'h-5 w-5') {
+            const icons = {
+                // Main Icons
+                home: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`,
+                user: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+                menu: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
+                
+                // Project Specific Icons (for Lecturer role) - Adjusted to look like the image
+                specialProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`, /* Folder icon (similar to image) */
+
+                coopProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`, /* Briefcase */
+
+                // Logout Icon
+                logOut: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>`,
+            };
+            return icons[name] || '';
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // --- Custom Modal Functions (Replaces alert() and confirm()) ---
+        function showModal(message, type = 'alert', onConfirm = null, customContent = null) {
+            const modal = document.getElementById('custom-modal');
+            const messageEl = document.getElementById('modal-message');
+            const customContentEl = document.getElementById('modal-custom-content');
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+            
+            messageEl.textContent = message;
+
+            // Handle custom content (like the textarea for revisions)
+            customContentEl.innerHTML = customContent || '';
+            customContentEl.classList.toggle('hidden', !customContent);
+
+            if (type === 'confirm') {
+                confirmBtn.onclick = () => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    if (onConfirm) {
+                        const revisionText = document.getElementById('revision-input')?.value || '';
+                        onConfirm(true, revisionText);
+                    }
+                };
+                cancelBtn.onclick = () => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    if (onConfirm) onConfirm(false, '');
+                };
+                confirmBtn.textContent = 'ยืนยัน';
+                cancelBtn.classList.remove('hidden');
+            } else { // 'alert'
+                confirmBtn.onclick = () => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                };
+                confirmBtn.textContent = 'ตกลง';
+                cancelBtn.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Function to handle the grading buttons
+        function handleGrading(result) {
+            let message = '';
+            let confirmText = '';
+            let buttonColor = 'bg-blue-600';
+            let hoverColor = 'hover:bg-blue-700';
+            let customContent = null; // HTML content for the modal
+
+            if (result === 'pass') {
+                message = 'คุณต้องการอนุมัติให้หัวข้อโครงงานนี้ "ผ่าน" ใช่หรือไม่?';
+                confirmText = 'อนุมัติให้ผ่าน';
+                buttonColor = 'bg-green-600';
+                hoverColor = 'hover:bg-green-700';
+            } else if (result === 'revision') {
+                message = 'โปรดระบุข้อแก้ไขเพิ่มเติมก่อนที่จะกำหนดให้หัวข้อนี้ "ผ่านแบบมีการแก้ไข"';
+                confirmText = 'ยืนยันการแก้ไข';
+                buttonColor = 'bg-amber-500';
+                hoverColor = 'hover:bg-amber-600';
+                customContent = `
+                    <label for="revision-input" class="block text-sm font-medium text-gray-600 mb-2 mt-4">ข้อเสนอแนะ/ข้อแก้ไขสำหรับนักศึกษา:</label>
+                    <textarea id="revision-input" rows="4" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-amber-500 focus:border-amber-500"></textarea>
+                `;
+            } else if (result === 'fail') {
+                message = 'คุณต้องการกำหนดให้หัวข้อโครงงานนี้ "ไม่ผ่าน" ใช่หรือไม่?';
+                confirmText = 'ไม่อนุมัติ';
+                buttonColor = 'bg-red-600';
+                hoverColor = 'hover:bg-red-700';
+                customContent = `
+                    <label for="revision-input" class="block text-sm font-medium text-gray-600 mb-2 mt-4">เหตุผลที่ไม่ผ่าน (โปรดระบุ):</label>
+                    <textarea id="revision-input" rows="4" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"></textarea>
+                `;
+            } else {
+                return;
+            }
+
+            // Update modal button appearance and text temporarily
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            confirmBtn.className = `font-semibold py-2 px-4 rounded-lg transition-colors text-white ${buttonColor} ${hoverColor}`;
+            
+            showModal(message, 'confirm', (confirmed, revisionText) => {
+                // Reset button color after confirmation/cancellation
+                confirmBtn.className = 'bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors';
+                
+                if (confirmed) {
+                    console.log('Project topic graded as:', result);
+                    if (revisionText) {
+                        console.log('Revision/Failure Reason:', revisionText);
+                    }
+                    showModal(`หัวข้อโครงงานถูกกำหนดผลเป็น "${confirmText}" เรียบร้อยแล้ว`, 'alert');
+                    // In a real application, you would submit data to the server here.
+                } else {
+                    console.log('Grading cancelled.');
+                }
+            }, customContent);
+        }
+
+        // Override the built-in alert/confirm (crucial for Canvas environment)
+        window.alert = (message) => showModal(message, 'alert');
+        window.confirm = (message) => new Promise(resolve => showModal(message, 'confirm', resolve));
+    </script>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Main container -->
+    <div class="w-full">
+        <!-- HEADER -->
+        <header class="header-kmutnb p-4 flex justify-between items-center sticky top-0 z-30">
+            
+            <!-- Left Side: Menu Toggle (Mobile) and Site Title -->
+            <div class="flex items-center space-x-4">
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleSidebar()" class="text-white md:hidden">
+                    <script>document.write(getIcon('menu'));</script>
+                </button>
+                
+                <!-- Site Title -->
+                <span class="site-title text-xl font-bold">Reg-Project.kmutnb</span>
+            </div>
+
+            <!-- Right Side: Profile and Logout Button -->
+            <div class="flex items-center space-x-3">
+                <!-- Profile Info Group -->
+                <div class="flex items-center space-x-2">
+                    <!-- Profile Image -->
+                    <img src="https://placehold.co/36x36/f97316/ffffff?text=U" 
+                            alt="รูปภาพโปรไฟล์" 
+                            onerror="this.onerror=null;this.src='https://placehold.co/36x36/f97316/ffffff?text=U'"
+                            class="profile-img rounded-full h-9 w-9 border-2 border-white object-cover">
+                    <span class="user-name hidden lg:block text-sm font-medium">อาจารย์</span>
+                </div>
+                
+                <!-- Logout Button -->
+                <a href="../user.html" 
+                   class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md"
+                   role="button">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+        
+        <!-- BANNER SECTION: ปรับขนาดเป็น h-40 (160px) บนมือถือ และ md:h-64 (256px) บนเดสก์ท็อป -->
+        <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                        alt="Student Portal Banner" 
+                        onerror="this.onerror=null;this.src='https://placehold.co/1200x256/004d40/ffffff?text=KMUTNB+Project+Portal'"
+                        class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+
+        <!-- MAIN LAYOUT: Sidebar and Content -->
+        <div class="flex flex-grow relative">
+            <!-- SIDEBAR - Menu for Lecturer Role (Consistent Structure) -->
+            <nav id="sidebar" class="sidebar w-64 z-20"> 
+                
+                <!-- TOP MENU ITEMS -->
+                <div class="space-y-0.5 pt-4"> 
+                    <!-- 1. หน้าหลัก -->
+                    <a href="home_page_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('home'));</script>หน้าหลัก
+                    </a>
+                    <!-- 2. โครงงานพิเศษ (ACTIVE) -->
+                    <a href="special_project_lecturer.html" class="sidebar-item active">
+                        <script>document.write(getIcon('specialProject'));</script>โครงงานพิเศษ
+                    </a>
+                    <!-- 3. โครงงานสหกิจ -->
+                    <a href="cooperative_project_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('coopProject'));</script>โครงงานสหกิจ
+                    </a>
+                </div>
+            </nav>
+
+            <!-- CONTENT AREA: Project Topic Review Form -->
+            <section class="flex-grow content-area">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">ตรวจสอบและอนุมัติหัวข้อโครงงาน</h2>
+                
+                <!-- Form Card -->
+                <div class="form-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-3">รายละเอียดการเสนอหัวข้อโครงงาน (Project Proposal Details)</h3>
+                    
+                    <!-- Student Info Section -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <!-- Member 1 -->
+                        <div class="form-group">
+                            <label for="member1" class="block text-sm font-medium text-gray-600 mb-1">ชื่อสมาชิกในกลุ่มคนที่1 (ภาษาไทย)</label>
+                            <input type="text" id="member1" value="นางสาวเพชรพราว ทวิรสกุล" readonly class="w-full p-3 border rounded-lg focus:outline-none text-base">
+                        </div>
+                        <!-- Member 2 -->
+                        <div class="form-group">
+                            <label for="member2" class="block text-sm font-medium text-gray-600 mb-1">ชื่อสมาชิกในกลุ่มคนที่2 (ภาษาไทย)</label>
+                            <input type="text" id="member2" value="นางสาวพลอยแพรว ทวิรสกุล" readonly class="w-full p-3 border rounded-lg focus:outline-none text-base">
+                        </div>
+                    </div>
+
+                    <!-- Student Info Section (English) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <!-- Member 1 EN -->
+                        <div class="form-group">
+                            <label for="member1_en" class="block text-sm font-medium text-gray-600 mb-1">ชื่อสมาชิกในกลุ่มคนที่1 (ภาษาอังกฤษ)</label>
+                            <input type="text" id="member1_en" value="Miss Petchproud Thavirasakul" readonly class="w-full p-3 border rounded-lg focus:outline-none text-base">
+                        </div>
+                        <!-- Member 2 EN -->
+                        <div class="form-group">
+                            <label for="member2_en" class="block text-sm font-medium text-gray-600 mb-1">ชื่อสมาชิกในกลุ่มคนที่2 (ภาษาอังกฤษ)</label>
+                            <input type="text" id="member2_en" value="Miss Ploypraew Thavirasakul" readonly class="w-full p-3 border rounded-lg focus:outline-none text-base">
+                        </div>
+                    </div>
+
+                    <!-- Major and Topic -->
+                    <div class="space-y-6 mb-8">
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-gray-600 mb-2">สาขา</label>
+                            <div class="flex flex-wrap gap-3">
+                                <!-- IT -->
+                                <label class="radio-label">
+                                    <input type="radio" name="major" value="it" disabled>
+                                    <span class="p-2 rounded">IT</span>
+                                </label>
+                                <!-- ITI -->
+                                <label class="radio-label">
+                                    <input type="radio" name="major" value="iti" disabled>
+                                    <span class="p-2 rounded">ITI</span>
+                                </label>
+                                <!-- INE (Selected) -->
+                                <label class="radio-label selected">
+                                    <input type="radio" name="major" value="ine" checked disabled>
+                                    <span class="p-2 rounded">INE</span>
+                                </label>
+                                <!-- INET -->
+                                <label class="radio-label">
+                                    <input type="radio" name="major" value="inet" disabled>
+                                    <span class="p-2 rounded">INET</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project_title_th" class="block text-sm font-medium text-gray-600 mb-1">หัวข้อโครงงาน (ภาษาไทย)</label>
+                            <input type="text" id="project_title_th" value="ระบบจัดการข้อมูลโครงงานพิเศษ" readonly class="w-full p-3 border rounded-lg text-base">
+                        </div>
+                        <div class="form-group">
+                            <label for="case_study_th" class="block text-sm font-medium text-gray-600 mb-1">กรณีศึกษา (ภาษาไทย)</label>
+                            <input type="text" id="case_study_th" value="คณะเทคโนโลยีและการจัดการอุตสาหกรรม" readonly class="w-full p-3 border rounded-lg text-base">
+                        </div>
+                        <div class="form-group">
+                            <label for="project_title_en" class="block text-sm font-medium text-gray-600 mb-1">หัวข้อโครงงาน (ภาษาอังกฤษ)</label>
+                            <input type="text" id="project_title_en" value="Project Management System" readonly class="w-full p-3 border rounded-lg text-base">
+                        </div>
+                        <div class="form-group">
+                            <label for="case_study_en" class="block text-sm font-medium text-gray-600 mb-1">กรณีศึกษา (ภาษาอังกฤษ)</label>
+                            <input type="text" id="case_study_en" value="Faculty of Industrial Technology and Management" readonly class="w-full p-3 border rounded-lg text-base">
+                        </div>
+
+                        <!-- Objective and Scope -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="form-group">
+                                <label for="objective" class="block text-sm font-medium text-gray-600 mb-1">วัตถุประสงค์</label>
+                                <textarea id="objective" rows="4" readonly class="w-full p-3 border rounded-lg resize-none text-sm">ทำให้ระบบใช้งานได้สะดวกมากขึ้น</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="scope" class="block text-sm font-medium text-gray-600 mb-1">ขอบเขตของโครงงาน</label>
+                                <textarea id="scope" rows="4" readonly class="w-full p-3 border rounded-lg resize-none text-sm">ออกแบบระบบจัดการข้อมูลโครงงานพิเศษ มจพ.</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Project Details -->
+                        <div class="form-group mb-10">
+                            <label for="details" class="block text-sm font-medium text-gray-600 mb-1">รายละเอียดโครงงาน</label>
+                            <textarea id="details" rows="6" readonly class="w-full p-3 border rounded-lg resize-none text-sm">ปัจจุบันมีการจัดการข้อมูลโครงงานพิเศษของนักศึกษาในหลายๆ สถาบันการศึกษาซึ่งเป็นแบบเดิมๆ คือ การจัดเก็บในรูปแบบเอกสาร หรือ ไฟล์ข้อมูลแบบกระจัดกระจาย ทำให้เกิดปัญหาหลายอย่างตามมา เช่น:
+• การค้นหาข้อมูลทำได้ยาก: เนื่องจากมีการจัดข้อมูลโครงงานเก่าๆ เพื่ออ้างอิงหรือศึกษา
+• ผู้ใช้งานต้องเสียเวลาในการค้นหาไฟล์จำนวนมาก หรือต้องติดต่อต่อผู้ที่เกี่ยวข้องโดยตรง</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="advisor" class="block text-sm font-medium text-gray-600 mb-1">อาจารย์ที่ปรึกษา</label>
+                            <input type="text" id="advisor" value="ผศ.ดร.นิติการ นาคเจือทอง" readonly class="w-full p-3 border rounded-lg text-base">
+                        </div>
+                        <div class="form-group">
+                            <label for="co_advisor" class="block text-sm font-medium text-gray-600 mb-1">อาจารย์ที่ปรึกษาร่วม</label>
+                            <input type="text" id="co_advisor" value="อ.ดร.วัชรชัย คงศิริวัฒนา" readonly class="w-full p-3 border rounded-lg text-base">
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons Group (Grading) - MODIFIED -->
+                    <div class="border-t border-gray-200 pt-6 mt-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">กำหนดผลการอนุมัติหัวข้อโครงงาน</h4>
+                        
+                        <!-- Grading Buttons Row (Pass, Revision, Fail) -->
+                        <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+                            <!-- 1. Pass -->
+                            <button 
+                                type="button" 
+                                onclick="handleGrading('pass')"
+                                class="w-full md:w-1/4 py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                          
+                                ผ่าน
+                            
+                            <!-- 2. Minor Revision -->
+                            <button 
+                                type="button" 
+                                onclick="handleGrading('revision')"
+                                class="w-full md:w-1/3 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                                ผ่านแบบมีการแก้ไข
+                            </button>
+                            
+                            <!-- 3. Fail -->
+                            <button 
+                                type="button" 
+                                onclick="handleGrading('fail')"
+                                class="w-full md:w-1/3 py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                                ไม่ผ่าน 
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div> <!-- End of form-card -->
+                <!-- 0. Back Button (New, Centered below grading buttons) -->
+                        <a href="project_details_lecturer.html"  div class="flex justify-center mt-6">
+                            <button 
+                                type="button" 
+                                onclick="history.back()"
+                                class="w-full md:w-1/4 py-3 px-4 bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                                ย้อนกลับ
+                            </button>
+                        </a>
+            </section>
+        </div>
+    </div>
+
+
+    <!-- Custom Modal for Alert/Confirmation (Replaces alert() and confirm()) -->
+    <div id="custom-modal" class="fixed inset-0 bg-gray-600 bg-opacity-75 hidden items-center justify-center z-50 transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-100">
+            <h4 class="text-xl font-bold mb-4 text-gray-800">ข้อความแจ้งเตือน</h4>
+            <p id="modal-message" class="mb-2 text-gray-700"></p>
+            <div id="modal-custom-content" class="mb-6">
+                <!-- Content for revision/failure reason will be inserted here -->
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button id="modal-cancel-btn" class="hidden bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">
+                    ยกเลิก
+                </button>
+                <button id="modal-confirm-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                    ตกลง
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+<footer class="footer flex-shrink-0">
+    <div class="max-w-7xl mx-auto">
+        <p>
+            © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+        </p>
+        <p class="mt-1 text-xs text-gray-300">
+            ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+        </p>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ติดตามความคืบหน้า (อาจารย์) - Reg-Project.kmutnb</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Sarabun Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/Follow_the_project.css">
+    <!-- Icon Helper Function -->
+    <script>
+        function getIcon(name, classes = 'h-5 w-5') {
+            const icons = {
+                user: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+                menu: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
+                
+                // 1. หน้าหลัก (Home)
+                home: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`, 
+                
+                // 2. โครงงานพิเศษ (Folder Icon based on image)
+                specialProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 8.87 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"></path></svg>`, 
+                
+                // 3. โครงงานสหกิจ (Briefcase Icon based on image)
+                coopProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`, 
+            };
+            return icons[name] || '';
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Dummy function to simulate saving the data
+        function submitComment(type) {
+            const comment = document.getElementById(type + '_comment').value;
+            if (comment.trim() === "") {
+                console.error("Comment cannot be empty.");
+                displayMessage('กรุณาใส่ความคิดเห็นก่อนส่ง', 'error');
+                return;
+            }
+            
+            // Simulation of API call
+            console.log(`Submitting comment for ${type}: ${comment}`);
+            displayMessage(`ความคิดเห็นถูกส่งแล้วสำหรับ ${type === 'advisor' ? 'อาจารย์ที่ปรึกษา' : 'อาจารย์ประจำวิชา'}!`, 'success');
+        }
+
+        // Dummy function for Progress Slider/Input interaction
+        function updateProgress(value) {
+            const progressBar = document.getElementById('progressBar');
+            const progressPercent = document.getElementById('progressPercent');
+            progressBar.style.width = value + '%';
+            progressPercent.textContent = value + ' %';
+        }
+
+        // Custom Message Display (to replace alert())
+        function displayMessage(message, type) {
+            const msgBox = document.createElement('div');
+            msgBox.textContent = message;
+            msgBox.className = `fixed top-4 right-4 p-4 rounded-lg shadow-xl text-white z-50 transition-transform duration-300 transform translate-x-0`;
+            
+            if (type === 'success') {
+                msgBox.classList.add('bg-green-600');
+            } else if (type === 'error') {
+                msgBox.classList.add('bg-red-600');
+            } else {
+                msgBox.classList.add('bg-gray-600');
+            }
+
+            document.body.appendChild(msgBox);
+
+            setTimeout(() => {
+                msgBox.classList.add('translate-x-full');
+                msgBox.addEventListener('transitionend', () => msgBox.remove());
+            }, 3000);
+        }
+
+        window.onload = function() {
+            const saveProgressButton = document.querySelector('.progress-group .submit-button');
+            if (saveProgressButton) {
+                saveProgressButton.onclick = function() {
+                    displayMessage('ความคืบหน้าถูกบันทึกแล้ว!', 'success');
+                };
+            }
+            const saveSignatureButton = document.querySelector('.signature-group .submit-button');
+            if (saveSignatureButton) {
+                saveSignatureButton.onclick = function() {
+                    displayMessage('การลงนามรับรองถูกบันทึกแล้ว!', 'success');
+                };
+            }
+        };
+
+    </script>
+    
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Main container -->
+    <div class="w-full">
+        <!-- HEADER -->
+        <!-- HEADER: ใช้ Flexbox เพื่อจัดองค์ประกอบให้ชิดซ้าย-ขวา -->
+        <header class="header-kmutnb p-4 flex justify-between items-center sticky top-0 z-30">
+            
+            <!-- Left Side: Menu Toggle (Mobile) and Site Title -->
+            <div class="flex items-center space-x-4">
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleSidebar()" class="text-white md:hidden">
+                    <script>document.write(getIcon('menu'));</script>
+                </button>
+                
+                <!-- Site Title -->
+                <span class="site-title text-xl font-bold">Reg-Project.kmutnb</span>
+            </div>
+
+            <!-- Right Side: Profile and Logout Button -->
+            <div class="flex items-center space-x-3">
+                <!-- Profile Info Group -->
+                <div class="flex items-center space-x-2">
+                    <!-- Profile Image -->
+                    <img src="https://placehold.co/36x36/f97316/ffffff?text=U" 
+                         alt="รูปภาพโปรไฟล์" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/36x36/f97316/ffffff?text=U'"
+                         class="profile-img rounded-full h-9 w-9 border-2 border-white object-cover">
+                    <span class="user-name hidden lg:block text-sm font-medium"></span>
+                </div>
+                
+                <!-- Logout Button -->
+                <a href="../user.html" 
+                   class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md"
+                   role="button">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+        
+        <!-- BANNER SECTION: ปรับขนาดเป็น h-40 (160px) บนมือถือ และ md:h-64 (256px) บนเดสก์ท็อป -->
+        <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                 alt="Student Portal Banner" 
+                 onerror="this.onerror=null;this.src='https://placehold.co/1200x256/004d40/ffffff?text=KMUTNB+Project+Portal'"
+                 class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+
+        <!-- MAIN LAYOUT: Sidebar and Content -->
+        <div class="flex flex-grow relative">
+            <!-- SIDEBAR - Menu for Lecturer Role -->
+            <nav id="sidebar" class="sidebar z-20 hidden md:block"> 
+                <div class="space-y-0.5"> 
+                    <!-- 1. หน้าหลัก -->
+                    <a href="home_page_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('home'));</script>หน้าหลัก
+                    </a>
+                    <!-- 2. โครงงานพิเศษ (Active state on this page) -->
+                    <a href="#" class="sidebar-item active">
+                        <script>document.write(getIcon('specialProject'));</script>โครงงานพิเศษ
+                    </a>
+                    <!-- 3. โครงงานสหกิจ -->
+                    <a href="cooperative_project_lecturer.html" class="sidebar-item">
+                        <script>document.write(getIcon('coopProject'));</script>โครงงานสหกิจ
+                    </a>
+                </div>
+            </nav>
+
+            <!-- CONTENT AREA: Progress Tracking Form -->
+            <section class="flex-grow p-6 md:p-10 content-area">
+                <h1 class="text-3xl font-bold text-gray-800 mb-8">ติดตามความคืบหน้าโครงงานพิเศษ</h1>
+
+                <!-- Adjusted max-w to 5xl for wider content area -->
+                <form class="progress-box max-w-5xl mx-auto" onsubmit="return false;">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-3">รายละเอียดความคืบหน้ารายสัปดาห์</h2>
+
+                    <!-- 1. Detail Display Group (Now takes full width of max-w-5xl container) -->
+                    <div class="detail-display-group w-full mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p class="text-lg font-bold text-blue-700 mb-2">สัปดาห์ที่ 1 : การทบทวนวรรณกรรมและการวางแผน</p>
+                        <p class="text-sm font-medium text-gray-600 mb-2">ส่งเมื่อ: 10 กันยายน 2568</p>
+                        <!-- readonly-box inside is already w-full via CSS, ensuring content uses the full width -->
+                        <div class="readonly-box">
+                            <p class="detail-text leading-relaxed">
+                                สรุปผลการทบทวนวรรณกรรมที่เกี่ยวข้องกับระบบจัดการข้อมูลโครงงานพิเศษ ได้แก่ การออกแบบฐานข้อมูล, เทคโนโลยี Frontend (React/Angular), และการใช้งาน Firebase Firestore เพื่อวางแผนโครงสร้างข้อมูลเบื้องต้น
+                                กำหนดขอบเขตของระบบที่จะพัฒนาใน phase แรก และร่าง Mockup UI สำหรับหน้าหลัก
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Progress Bar Group (Updated for better UX) -->
+                    <div class="progress-group mb-8">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">สถานะความคืบหน้า</h3>
+                        <div class="progress-bar-container">
+                            <!-- Initial progress: 30% -->
+                            <div id="progressBar" class="progress-bar" style="width: 30%;"></div>
+                            <span id="progressPercent" class="progress-percent">30 %</span>
+                        </div>
+                        
+                        <!-- Control (For Lecturer to set progress) -->
+                        <div class="mt-4 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <label for="progress_slider" class="font-medium text-gray-700 w-full sm:w-auto">กำหนด % ความคืบหน้า:</label>
+                            <input type="range" id="progress_slider" min="0" max="100" value="30" step="5" 
+                                   oninput="updateProgress(this.value)"
+                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg">
+                            <button type="button" class="submit-button send-button w-full sm:w-auto">บันทึก</button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Advisor Comment Group -->
+                    <div class="comment-group mb-8 pt-4 border-t">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">ความคิดเห็นสำหรับอาจารย์ที่ปรึกษา</h3>
+                        <div class="form-group mb-4">
+                            <label for="advisor_comment">ความคิดเห็น (Comment)</label>
+                            <textarea id="advisor_comment" name="advisor_comment" rows="4" placeholder="โปรดแสดงความคิดเห็นหรือข้อเสนอแนะเกี่ยวกับความคืบหน้า"></textarea>
+                        </div>
+                        <div class="flex justify-end mt-2">
+                            <button type="button" onclick="submitComment('advisor')" class="submit-button">ส่งความคิดเห็น</button>
+                        </div>
+                    </div>
+
+                    <!-- 4. Course Instructor Comment Group -->
+                    <div class="comment-group mb-8 pt-4 border-t">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">ความคิดเห็นสำหรับอาจารย์ประจำวิชา</h3>
+                        <div class="form-group mb-4">
+                            <label for="course_instructor_comment">ความคิดเห็น (Comment)</label>
+                            <textarea id="course_instructor_comment" name="course_instructor_comment" rows="4" placeholder="โปรดแสดงความคิดเห็นหรือข้อเสนอแนะเกี่ยวกับความคืบหน้า"></textarea>
+                        </div>
+                        <div class="flex justify-end mt-2">
+                            <button type="button" onclick="submitComment('course_instructor')" class="submit-button">ส่งความคิดเห็น</button>
+                        </div>
+                    </div>
+
+                    <!-- 5. Signature Group -->
+                    <div class="signature-group pt-4 border-t">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">การลงนามรับรอง</h3>
+                        <div class="form-group max-w-md mb-4">
+                            <label for="signature">ลงชื่อ (กรอกชื่อเพื่อลงนามรับรอง)</label>
+                            <input type="text" id="signature" name="signature" placeholder="อาจารย์ประจำวิชา">
+                        </div>
+                        <div class="flex justify-end mt-2">
+                            <button type="button" class="submit-button">ลงนามรับรอง</button>
+                        </div>
+                    </div>
+                </form>
+                 <a href="project_details_lecturer.html"  div class="flex justify-center mt-6">
+                            <button 
+                                type="button" 
+                                onclick="history.back()"
+                                class="w-full md:w-1/4 py-3 px-4 bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                            >
+                                ย้อนกลับ
+                            </button>
+                        </a>
+            </section>
+        </div>
+    </div>
+</body>
+<footer class="footer flex-shrink-0">
+        <div class="max-w-7xl mx-auto">
+            <p>
+                © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+            </p>
+            <p class="mt-1 text-xs text-gray-300">
+                ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+            </p>
+        </div>
+    </footer>
+</html>

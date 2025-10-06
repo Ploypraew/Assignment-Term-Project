@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายชื่อโครงงานสำหรับเจ้าหน้าที่ - Reg-Project.kmutnb</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Sarabun Font (Recommended for Thai text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/home_page_offlcer.css">
+    <!-- Icon Helper Function -->
+    <script>
+        function getIcon(name, classes = 'h-5 w-5') {
+            const icons = {
+                // Main Icons (Lucide Icons adapted for simplicity)
+                home: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`,
+                user: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+                list: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>`,
+                menu: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
+                close: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`
+            };
+            return icons[name] || '';
+        }
+
+        // Sidebar Toggle Function
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (sidebar && overlay) {
+                // Toggles the transform property defined in CSS
+                sidebar.classList.toggle('translate-x-0');
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('active');
+            }
+        }
+
+        // Close sidebar when clicking outside on mobile
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('overlay');
+            if (overlay) {
+                overlay.addEventListener('click', toggleSidebar);
+            }
+        });
+
+    </script>
+    
+</head>
+<body class="flex flex-col">
+
+    <!-- HEADER: Reverted order to be Left (Site Info) and Right (User Info) -->
+    <header class="header flex justify-between items-center h-16 px-4 md:px-8">
+        <!-- LEFT SIDE: Site Title only (header-left) -->
+        <div class="header-left">
+            <span class="site-title">Reg-Project.kmutnb</span>
+        </div>
+
+        <!-- RIGHT SIDE: Profile and Logout Button (header-right) -->
+        <div class="header-right">
+            <!-- รูปภาพโปรไฟล์ -->
+            <img src="https://placehold.co/36x36/f97316/ffffff?text=U" alt="รูปภาพโปรไฟล์" class="profile-img">
+            <span class="user-name hidden lg:block">เจ้าหน้าที่</span>
+            
+            <!-- ปุ่มออกจากระบบ (Logout Button) -->
+            <a href="../user.html" class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md">
+                ออกจากระบบ
+            </a>
+        </div>
+    </header>
+        
+    <!-- BANNER SECTION: ปรับขนาดเป็น h-40 (160px) บนมือถือ และ md:h-64 (256px) บนเดสก์ท็อป -->
+    <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+        <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+        <img src=" https://shorturl.asia/QwPHt" 
+                alt="Student Portal Banner" 
+                class="w-full h-full object-cover opacity-80">
+        
+        <!-- Overlay Text (ข้อความต้อนรับ) - ลบเนื้อหาออกแล้ว -->
+        <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+            <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                <!-- ข้อความถูกลบตามคำขอ -->
+            </h2>
+            <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                <!-- ข้อความถูกลบตามคำขอ -->
+            </p>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay for Sidebar -->
+    <div id="overlay" class="overlay md:hidden"></div>
+
+    <!-- MAIN LAYOUT: Sidebar and Content -->
+    <div class="main-content flex flex-grow relative">
+        
+        <!-- SIDEBAR -->
+        <!-- On Mobile: fixed, off-screen (-translate-x-full) -->
+        <!-- On Desktop: sticky, visible (md:sticky, md:translate-x-0) -->
+        <aside id="sidebar" class="sidebar -translate-x-full md:translate-x-0 md:sticky md:w-72">
+            
+            <div class="flex justify-between items-center p-4 md:hidden">
+                <h3 class="text-lg font-semibold text-gray-800">เมนูเจ้าหน้าที่</h3>
+                <button onclick="toggleSidebar()" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                    <script>document.write(getIcon('close', 'h-6 w-6'));</script>
+                </button>
+            </div>
+
+             <div class="space-y-1 mt-2">
+                <!-- 1. หน้าหลัก (Inactive as per image) -->
+                <a href="home_page_offlcer.html" class="sidebar-item selected">
+                    <script>document.write(getIcon('home', 'h-5 w-5'));</script>
+                    หน้าหลัก
+                </a>
+                
+                <!-- 2. รายชื่อนักศึกษา (Active/Selected as per image) -->
+                <a href="List_of_names.html" class="sidebar-item">
+                    <script>document.write(getIcon('list', 'h-5 w-5'));</script>
+                    รายชื่อนักศึกษา
+                </a>
+                <!-- รายการโครงงาน (Project List) ถูกลบตามที่แจ้งไว้ -->
+            </div>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <!-- Content remains the Project List since the user is currently viewing it, only the menu item was removed. -->
+        <section class="content-area">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 border-b pb-3">
+                รายการโครงงานของนักศึกษาทั้งหมด
+            </h2>
+
+            
+          
+
+            <div class="bg-white p-4 md:p-6 rounded-xl shadow-lg border border-gray-100">
+                <!-- Table Container -->
+                <div class="overflow-x-auto">
+                    <table class="project-table w-full text-left text-gray-700 border-separate" style="border-spacing: 0;">
+                        <thead>
+                            <tr>
+                                <th class="rounded-tl-lg">รายชื่อโครงงาน</th>
+                                <th class="text-center">สถานะ</th>
+                                <th class="text-center rounded-tr-lg">รายละเอียด</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Project 1: Pending -->
+                            <tr>
+                                <td data-label="โครงงาน">ระบบจัดการข้อมูลโครงการพิเศษ</td>
+                                <td data-label="สถานะ" class="text-center">
+                                    <span class="status-badge pending">ยื่นสอบหัวข้อ</span>
+                                </td>
+                                <td data-label="รายละเอียด" class="text-center">
+                                    <a href="Project_details.html" class="detail-button">คลิก</a>
+                                </td>
+                            </tr>
+                            <!-- Project 2: Approved -->
+                            <tr>
+                                <td data-label="โครงงาน">ระบบจองคิวออนไลน์สำหรับร้านค้าคลินิก</td>
+                                <td data-label="สถานะ" class="text-center">
+                                    <span class="status-badge approved">ผ่านการอนุมัติ</span>
+                                </td>
+                                <td data-label="รายละเอียด" class="text-center">
+                                    <a href="Project_details.html" class="detail-button">คลิก</a>
+                                </td>
+                            </tr>
+                            <!-- Project 3: Pending -->
+                            <tr>
+                                <td data-label="โครงงาน">ระบบบ้านอัจฉริยะ (Smart Home)</td>
+                                <td data-label="สถานะ" class="text-center">
+                                    <span class="status-badge pending">ยื่นสอบหัวข้อ</span>
+                                </td>
+                                <td data-label="รายละเอียด" class="text-center">
+                                    <a href="Project_details.html" class="detail-button">คลิก</a>
+                                </td>
+                            </tr>
+                            <!-- Project 4: Approved -->
+                            <tr>
+                                <td data-label="โครงงาน">ระบบตรวจจับการบุกรุกในเครือข่าย</td>
+                                <td data-label="สถานะ" class="text-center">
+                                    <span class="status-badge approved">ผ่านการอนุมัติ</span>
+                                </td>
+                                <td data-label="รายละเอียด" class="text-center">
+                                    <a href="Project_details.html" class="detail-button">คลิก</a>
+                                </td>
+                            </tr>
+                            <!-- Project 5: Pending -->
+                            <tr>
+                                <td data-label="โครงงาน">การพยากรณ์ข้อมูลด้วย Machine Learning</td>
+                                <td data-label="สถานะ" class="text-center">
+                                    <span class="status-badge pending">ยื่นสอบหัวข้อ</span>
+                                </td>
+                                <td data-label="รายละเอียด" class="text-center">
+                                    <a href="Project_details.html" class="detail-button">คลิก</a>
+                                </td>
+                            </tr>
+                            <!-- Project 6: Approved -->
+                            <tr>
+                                <td data-label="โครงงาน">เว็บไซต์จัดการข้อมูลศิษย์เก่า</td>
+                                <td data-label="สถานะ" class="text-center">
+                                    <span class="status-badge approved">ผ่านการอนุมัติ</span>
+                                </td>
+                                <td data-label="รายละเอียด" class="text-center">
+                                    <a href="Project_details.html" class="detail-button">คลิก</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table Container -->
+            </div>
+        </section>
+    </div>
+</body>
+<footer class="footer">
+            <div class="max-w-7xl mx-auto">
+                <p>
+                    © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+                </p>
+                <p class="mt-1 text-xs text-gray-300">
+                    ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+                </p>
+            </div>
+</footer>
+</html>

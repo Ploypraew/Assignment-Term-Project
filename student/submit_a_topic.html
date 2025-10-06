@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ยื่นสอบหัวข้อ - Reg-Project.kmutnb</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/submit_a_topic.css">
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Main container takes full height and is a column flex -->
+    <div class="w-full flex flex-col min-h-screen">
+        <!-- HEADER (Height: 56px) -->
+        <header class="header">
+            <div class="header-left">
+                <!-- โลโก้ KMUTNB ที่อัปโหลด -->
+             
+                <span class="site-title">Reg-Project.kmutnb</span>
+            </div>
+            <div class="header-right">
+                <!-- รูปภาพโปรไฟล์ -->
+                <img src="https://placehold.co/36x36/f97316/ffffff?text=U" alt="รูปภาพโปรไฟล์" class="profile-img">
+                <span class="user-name hidden lg:block">นักศึกษา</span>
+                
+                <!-- ปุ่มออกจากระบบ (Logout Button) -->
+                <a href="../user.html" button class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT WRAPPER: Flex row for Sidebar and Content, fills remaining height -->
+        <!-- min-h-[calc(100vh-56px)] คือความสูงที่เหลือจาก Header (56px) และ Footer (จะถูกดันลงไปเอง) -->
+          <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                 alt="Student Portal Banner" 
+                 class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) - ลบเนื้อหาออกแล้ว -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+        <div class="main-content-wrapper flex flex-grow">
+         
+            
+            <!-- SIDEBAR (Fixed width, full height) -->
+            <nav class="sidebar hidden md:block w-64 p-4 sticky top-0">
+                <div class="space-y-2">
+                    <a href="home_page_student.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                        หน้าหลัก
+                    </a>
+                    <a href="topic.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 2H4v8h12V6zm-1 3H5a1 1 0 010-2h10a1 1 0 010 2z" clip-rule="evenodd" /></svg>
+                        เสนอหัวข้อโครงงาน
+                    </a>
+                    <a href="submit_a_topic.html" class="sidebar-item active">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v2.167h.465a2 2 0 011.85 2.58l-1.33 4.653A2 2 0 0115.175 17H4.825a2 2 0 01-1.85-2.58l-1.33-4.653a2 2 0 011.85-2.58H4V5zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                        ยื่นสอบหัวข้อ
+                    </a>
+                    <a href="follow_the_progress.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                        ติดตามความคืบหน้า
+                    </a>
+                    <a href="Submit_an_exam.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+                        ยื่นสอบโปรเจกต์
+                    </a>
+                    <a href="Submit_project_completion.html" class="sidebar-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 3a1 1 0 100 2h10a1 1 0 100-2H5z" clip-rule="evenodd" /></svg>
+                        ยื่นจบโปรเจกต์
+                    </a>
+                </div>
+            </nav>
+
+            <!-- MAIN CONTENT AREA: ใช้ flex-grow เพื่อขยายเต็มพื้นที่ -->
+            <main class="content-form">
+                
+                <h1 class="page-title">ยื่นสอบหัวข้อ</h1>
+                
+                <div class="card-container">
+                    
+                    <form class="project-form">
+                        
+                        <!-- Topic Section -->
+                        <div class="form-section">
+                            <div class="form-field">
+                                <p>หัวข้อ</p>
+                                <input type="text" class="form-input-base" value="ระบบการจัดการข้อมูลโครงงานพิเศษ" disabled>
+                            </div>
+                        </div>
+
+                        <!-- Committee Section -->
+                        <div class="form-section">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">คณะกรรมการ</h2> 
+                            
+                            <div class="form-field">
+                                <p>ประธาน</p>
+                                <input type="text" class="form-input-base" value="รศ.ดร.อนิราช มิ่งขวัญ" disabled>
+                            </div>
+                            <div class="form-field">
+                                <p>กรรมการ</p>
+                                <input type="text" class="form-input-base" value="ผศ.ดร.นิติการ นาคเจือทอง" disabled>
+                            </div>
+                            <div class="form-field">
+                                <p>กรรมการ</p>
+                                <input type="text" class="form-input-base" value="รศ.ดร.ยุพิน สรรพคุณ" disabled>
+                            </div>
+                            <div class="form-field">
+                                <p>กรรมการ</p>
+                                <input type="text" class="form-input-base" value="อ.ดร.วัชรชัย คงศิริวัฒนา" disabled>
+                            </div>
+                        </div>
+
+                        <!-- Status Result Section -->
+                        <div class="form-section status-result">
+                            <h3 class="status-title">สถานะผลสอบหัวข้อ</h3>
+                            <span class="status-tag status-success">ผ่าน</span>
+                        </div>
+
+                        <!-- Correction Box -->
+                        <div class="form-section correction-box">
+                            <p class="font-bold text-gray-700">แบบแก้ไขเสนอหัวข้อ</p>
+                            <a href="edit_the_topic.html" class="btn btn-cancel">คลิก</a>
+                        </div>
+                        
+                    </form>
+                </div>
+
+            </main>
+        </div>
+        <!-- END MAIN CONTENT WRAPPER -->
+        
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="max-w-7xl mx-auto">
+                <p>
+                    © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+                </p>
+                <p class="mt-1 text-xs text-gray-300">
+                    ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+                </p>
+            </div>
+        </footer>
+        <!-- END FOOTER -->
+
+    </div>
+</body>
+</html>

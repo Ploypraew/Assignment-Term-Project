@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ยื่นสอบจบโปรเจกต์ - Reg-Project.kmutnb</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Sarabun Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/Submit_project_completion.css">
+    <!-- Use Heroicons/Lucide icons for better visuals than emojis -->
+    <script>
+        function getIcon(name, classes = 'h-5 w-5') {
+            const icons = {
+                home: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>`,
+                propose: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 2H4v8h12V6zm-1 3H5a1 1 0 010-2h10a1 1 0 010 2z" clip-rule="evenodd" /></svg>`,
+                examTopic: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v2.167h.465a2 2 0 011.85 2.58l-1.33 4.653A2 2 0 0115.175 17H4.825a2 2 0 01-1.85-2.58l-1.33-4.653a2 2 0 011.85-2.58H4V5zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>`,
+                progress: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>`,
+                examProject: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>`,
+                complete: `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm1 3a1 1 0 100 2h10a1 1 0 100-2H5z" clip-rule="evenodd" /></svg>`,
+                upload: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>`,
+                user: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+                check: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+            };
+            return icons[name] || '';
+        }
+
+        /**
+         * Updates the file status text upon file selection.
+         */
+        function updateFileName(inputId, statusId, labelId) {
+            const input = document.getElementById(inputId);
+            const status = document.getElementById(statusId);
+            const label = document.getElementById(labelId);
+            
+            if (input.files.length > 0) {
+                const fileName = input.files[0].name;
+                status.textContent = fileName;
+                status.style.color = '#059669'; // Green-700
+                label.innerHTML = getIcon('check', 'h-4 w-4') + 'เปลี่ยนไฟล์';
+                label.classList.remove('bg-green-500');
+                label.classList.add('bg-blue-500'); // Change color after file is attached
+            } else {
+                status.textContent = 'ยังไม่ได้แนบไฟล์';
+                status.style.color = '#9ca3af'; // Gray-400
+                label.innerHTML = getIcon('upload', 'h-4 w-4') + 'แนบไฟล์';
+                label.classList.remove('bg-blue-500');
+                label.classList.add('bg-green-500');
+            }
+        }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Main container -->
+    <div class="w-full">
+        <!-- HEADER -->
+        <header class="header flex justify-between items-center px-6 py-3">
+            <div class="flex items-center space-x-3">
+                <!-- Placeholder Logo URL -->
+                
+                <span class="text-xl font-bold">Reg-Project.kmutnb</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                
+                <img src="https://placehold.co/36x36/f97316/ffffff?text=U" alt="รูปภาพโปรไฟล์" class="profile-img">
+                <span class="user-name hidden lg:block">นักศึกษา</span>
+                <a href="../user.html"  button class="text-white bg-red-600 hover:bg-red-700 font-medium text-sm px-3 py-1.5 rounded-lg transition duration-150 ease-in-out shadow-md">
+                    ออกจากระบบ
+                </a>
+            </div>
+        </header>
+        <div class="w-full h-40 md:h-64 bg-gray-300 relative overflow-hidden shadow-xl">
+            <!-- เปลี่ยน URL ของรูปภาพนี้เป็นรูปแบนเนอร์ที่คุณต้องการ -->
+            <img src=" https://shorturl.asia/QwPHt" 
+                 alt="Student Portal Banner" 
+                 class="w-full h-full object-cover opacity-80">
+            
+            <!-- Overlay Text (ข้อความต้อนรับ) - ลบเนื้อหาออกแล้ว -->
+            <div class="absolute inset-0 flex flex-col items-start justify-center p-8 bg-black bg-opacity-20">
+                <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </h2>
+                <p class="text-md sm:text-lg text-gray-100 mt-1 sm:mt-2 hidden sm:block">
+                    <!-- ข้อความถูกลบตามคำขอ -->
+                </p>
+            </div>
+        </div>
+        <!-- MAIN LAYOUT: Sidebar and Content -->
+        <div class="flex flex-grow">
+            <!-- SIDEBAR -->
+            <nav class="sidebar w-64 p-3 hidden md:block">
+                <div class="space-y-2">
+                    <!-- The a tags are now properly structured for navigation -->
+                    <a href="home_page_student.html" class="sidebar-item">
+                        <script>document.write(getIcon('home'));</script>หน้าหลัก
+                    </a>
+                    <a href="topic.html" class="sidebar-item">
+                        <script>document.write(getIcon('propose'));</script>เสนอหัวข้อโครงงาน
+                    </a>
+                    <a href="submit_a_topic.html" class="sidebar-item">
+                        <script>document.write(getIcon('examTopic'));</script>ยื่นสอบหัวข้อ
+                    </a>
+                    <a href="follow_the_progress.html" class="sidebar-item">
+                        <script>document.write(getIcon('progress'));</script>ติดตามความคืบหน้า
+                    </a>
+                    <a href="Submit_an_exam.html" class="sidebar-item">
+                        <script>document.write(getIcon('examProject'));</script>ยื่นสอบโปรเจค
+                    </a>
+                    <a href="Submit_project_completion.html" class="sidebar-item active">
+                        <script>document.write(getIcon('complete'));</script>ยื่นสอบจบโปรเจค
+                    </a>
+                </div>
+            </nav>
+
+            <!-- CONTENT AREA: Submission and Status -->
+            <section class="flex-grow p-6 md:p-10 content-area">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">ยื่นขอจบโปรเจกต์</h2>
+                
+                <!-- PROGRESS BAR SECTION -->
+                <div class="mb-8 p-6 bg-white rounded-xl shadow-md">
+                    <p class="text-lg font-semibold text-gray-600 mb-3">ความคืบหน้าการดำเนินงาน</p>
+                    <div class="h-8 bg-gray-200 rounded-full overflow-hidden">
+                        <!-- Simulate 100% completion -->
+                        <div class="progress-bar w-full" style="width: 100%;">
+                            100% (พร้อมยื่นจบ)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DOCUMENT UPLOAD SECTION -->
+                <div class="info-card">
+                    <p class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b">1. เอกสารที่นักศึกษาต้องส่ง</p>
+                    
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between py-4 border-b last:border-b-0">
+                        <span class="doc-label text-lg font-medium text-gray-700 mb-2 md:mb-0">เล่มโปรเจกต์ฉบับสมบูรณ์ (PDF)</span>
+                        <div class="flex items-center space-x-4">
+                            <span id="book-status" class="file-status text-sm text-gray-400">ยังไม่ได้แนบไฟล์</span>
+                            
+                            <label for="file-book" id="file-book-label" class="flex items-center space-x-2 px-4 py-2 text-sm font-semibold rounded-lg text-white bg-green-500 hover:bg-green-600 cursor-pointer transition duration-150 shadow-md">
+                                <script>document.write(getIcon('upload', 'h-4 w-4'));</script>
+                                <span>แนบไฟล์</span>
+                            </label>
+                            <input type="file" id="file-book" accept=".pdf" class="hidden-file-input" onchange="updateFileName('file-book', 'book-status', 'file-book-label')">
+                        </div>
+                    </div>
+
+                    <button
+                        class="w-full mt-6 py-3 text-lg font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition duration-150 shadow-lg"
+                        onclick="confirmSubmission()"
+                        type="button" 
+                    >
+                        ยื่นขอสอบจบโปรเจกต์
+                    </button>
+                    <script>
+                    function confirmSubmission() {
+                        alert('ดำเนินการยื่นขอจบโปรเจกต์เรียบร้อย');
+                    }
+                    </script>
+                </div>
+                
+                <!-- COMMITTEE & STATUS REVIEW SECTION -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    <!-- Committee Info -->
+                    <div class="info-card">
+                        <p class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b">2. คณะกรรมการที่แต่งตั้ง</p>
+                        <div class="space-y-3">
+                            <!-- Committee Member 1 (President) -->
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
+                                <span class="member-role font-bold text-indigo-600">ประธาน</span>
+                                <div class="member-name text-gray-700">รศ.ดร.อนิราช มิ่งขวัญ</div>
+                            </div>
+                            <!-- Committee Member 2 -->
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
+                                <span class="member-role font-medium text-indigo-600">กรรมการ</span>
+                                <div class="member-name text-gray-700">ผศ.ดร.นิติการ นาคเจือทอง</div>
+                            </div>
+                            <!-- Committee Member 3 -->
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
+                                <span class="member-role font-medium text-indigo-600">กรรมการ</span>
+                                <div class="member-name text-gray-700">รศ.ดร.ยุพิน สรรพคุณ</div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
+                                <span class="member-role font-medium text-indigo-600">กรรมการ</span>
+                                <div class="member-name text-gray-700">อ.ดร.วัชรชัย คงศิริวัฒนา</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Status -->
+                    <div class="info-card flex flex-col justify-between">
+                        <p class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b">3. ผลการพิจารณา</p>
+                        
+                        <div class="flex flex-col items-center justify-center p-6 text-center h-full">
+                            <span class="status-label text-2xl font-medium text-gray-600 mb-4">สถานะล่าสุด:</span>
+                            <!-- Status Button (Simulated 'Pass') -->
+                            <div class="status-button flex items-center space-x-2 px-8 py-3 text-2xl font-bold text-white bg-green-500 rounded-xl shadow-lg shadow-green-200 transform hover:scale-105 transition duration-200">
+                                <script>document.write(getIcon('check', 'h-7 w-7'));</script>
+                                <span>ผ่าน</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-4">หมายเหตุ: ผ่านการอนุมัติ</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+ <footer class="footer">
+            <div class="max-w-7xl mx-auto">
+                <p>
+                    © 2024 Reg-Project.kmutnb | ระบบจัดการข้อมูลโครงงานพิเศษ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ (KMUTNB)
+                </p>
+                <p class="mt-1 text-xs text-gray-300">
+                    ติดต่อสอบถาม: <a href="mailto:it-support@kmutnb.ac.th" class="footer-link transition duration-150">https://kmutnb.ac.th/</a>
+                </p>
+            </div>
+</footer>
+</html>

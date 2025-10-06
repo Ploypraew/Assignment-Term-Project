@@ -1,0 +1,84 @@
+/* Custom font family */
+        body {
+            font-family: 'Inter', 'Tahoma', 'Sarabun', sans-serif;
+            background-color: #f7f9fc; /* Keeping the background color consistent with the body class */
+        }
+        .header {
+            background-color: #004d40; 
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left { display: flex; align-items: center; gap: 0.75rem;color: #ffffff; }
+        .logo { height: 40px; }
+        .site-title { font-size: 1.25rem; font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 0.75rem; }
+        .user-name { font-size: 0.875rem; }
+        
+        
+        /* สไตล์สำหรับรูปภาพโปรไฟล์ที่เพิ่มเข้ามาใหม่ */
+        .profile-img { 
+            height: 36px; /* กำหนดขนาด */
+            width: 36px;
+            border-radius: 50%; /* ทำให้เป็นวงกลม */
+            object-fit: cover;
+            border: 2px solid #ffffff; /* ขอบสีขาว */
+        }
+        .user-name {
+            color: white;
+        }
+        /* Custom style for the Logout Button in the header (Now explicitly set to Red) */
+        .logout-button {
+            display: inline-block;
+            background-color: #8b0000; /* Explicitly set to deep red */
+            color: white;
+            padding: 6px 12px; 
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px; 
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            border: none;
+        }
+        .logout-button:hover {
+            background-color: #a30000; /* Darker red on hover */
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive Sidebar: Hidden on mobile by default, shown when toggled */
+        @media (max-width: 767px) {
+            #sidebar {
+                transition: transform 0.3s ease-in-out;
+            }
+            .sidebar-open {
+                transform: translateX(0) !important;
+            }
+        }
+        
+        /* Utility Classes from original custom CSS for semantic styling */
+        .header-dark-color { background-color: #1a5653; }
+        .text-brand-dark-blue { color: #1a375e; }
+        .bg-active-light { background-color: #e0f2fe; }
+        .border-active-blue { border-left-color: #0ea5e9; }
+        .text-kmutnb-red { color: #8b0000; }
+        .bg-user-icon { background-color: #5a9e9a; }
+        .bg-submit-button { background-color: #059669; }
+        .hover-submit-button:hover { background-color: #047857; }
+        /* FOOTER STYLES */
+        .footer {
+            background-color: #002d25; /* Darker shade of header teal for contrast */
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem; /* text-sm */
+            /* Using inset shadow for a clean separation line */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db; /* Light gray on hover */
+        }

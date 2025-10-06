@@ -1,0 +1,310 @@
+/* ------------------------------------ ตัวแปรสีสำหรับการออกแบบ (Re-added for functionality) ------------------------------------ */
+:root {
+    --kmutnb-red: #8b0000;
+    --brand-dark-blue: #1a375e;
+    --header-dark-teal: #004d40; /* สีเขียวเข้มสำหรับ Header */
+    --active-blue: #0ea5e9; /* Sky blue/Cyan */
+    --active-bg-light: #e0f2fe; 
+    --main-bg: #f7f9fc;
+    --sidebar-bg: #ffffff;
+    --text-color: #1f2937; 
+    --text-secondary: #4b5563;
+    --detail-bg: #ffffff;
+    --input-border: #e5e7eb; 
+    --button-submit-bg: #059669; /* เขียวสำหรับปุ่มยืนยัน */
+    --status-passed: #059669;
+    --status-progress: #f59e0b;
+    --shadow-lift: 0 10px 20px rgba(0, 0, 0, 0.08); 
+    --shadow-sidebar: 2px 0 10px rgba(0, 0, 0, 0.05);
+    /* กำหนดความสูงขององค์ประกอบคงที่ */
+    --header-height: 64px;
+    --banner-height-mobile: 160px; /* h-40 */
+    --banner-height-desktop: 256px; /* md:h-64 */
+}
+
+/* Base styles using Sarabun font and light background */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Sarabun', sans-serif; /* Changed to Sarabun */
+}
+
+body {
+    background-color: #f3f4f6; /* Light gray background (used over --main-bg) */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+/* Header Styling (Using specific colors and classes from your latest input) */
+.header {
+    background-color: var(--header-dark-teal); 
+    color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: var(--header-height);
+    z-index: 10;
+}
+.header-left { display: flex; align-items: center; gap: 0.75rem; color: #ffffff; }
+.logo { height: 40px; }
+.site-title { 
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #ffffff; /* Orange brand color mock */
+}
+.header-right { display: flex; align-items: center; gap: 0.75rem; }
+.profile-img {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    object-fit: cover;
+    border: 2px solid white;
+}
+.user-name { font-size: 0.875rem; font-weight: 500; }
+.logout-button { /* Re-adding custom logout button style */
+    display: inline-block;
+    background-color: var(--kmutnb-red);
+    color: white;
+    padding: 6px 12px; 
+    text-align: center;
+    cursor: pointer;
+    border-radius: 8px; 
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    border: none;
+}
+.logout-button:hover {
+    background-color: #a30000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ------------------------------------ Main Layout & Sidebar ------------------------------------ */
+.main-content {
+    display: flex;
+    flex-grow: 1;
+    /* Uses variables defined in :root */
+    min-height: calc(100vh - var(--header-height) - var(--banner-height-mobile)); 
+    max-width: 100vw;
+    margin: 0 auto;
+}
+
+.sidebar {
+    width: 300px;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--sidebar-bg); /* Use var for consistency */
+    box-shadow: var(--shadow-sidebar);
+    flex-shrink: 0;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    margin: 0.25rem 0.75rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 1.05em;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    gap: 0.5rem;
+}
+
+.sidebar-item:hover {
+    background-color: #f5f5f5;
+    color: var(--text-color);
+}
+
+.sidebar-item.selected { /* ใช้ selected สำหรับรายการที่ถูกเลือก */
+    background-color: var(--active-bg-light);
+    color: var(--active-blue);
+    font-weight: 600;
+    border-left: 4px solid var(--active-blue);
+    padding-left: calc(1.5rem - 4px);
+    box-shadow: 0 2px 8px rgba(14, 165, 236, 0.15);
+}
+
+.sidebar-item.selected .sidebar-icon {
+    color: var(--active-blue);
+}
+
+/* ------------------------------------ Content Area (Table View) ------------------------------------ */
+.content-area {
+    flex-grow: 1;
+    padding: 1.5rem 2rem;
+    overflow-y: auto; /* Ensure scrollability */
+}
+
+.table-container {
+    overflow-x: auto; 
+    background-color: var(--detail-bg, white);
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+#studentTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Table Header Styles (TH) */
+#studentTable thead th {
+    background-color: #f3f4f6;
+    color: #1f2937;
+    text-align: left;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: 1px solid #e5e7eb; 
+}
+
+/* Table Data Cell Styles (TD) */
+#studentTable td {
+    padding: 1rem 1.25rem;
+    vertical-align: top;
+    font-size: 0.9375rem;
+    color: #374151;
+    border: 1px solid #e5e7eb; 
+}
+
+/* Row Hover Effect */
+#studentTable tbody tr {
+    transition: background-color 0.2s;
+}
+#studentTable tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+.status-pass {
+    background-color: #d1fae5;
+    color: var(--status-passed, #059669); 
+    border: 1px solid #10b981;
+}
+.status-pending {
+    background-color: #fffbeb;
+    color: var(--status-progress, #d97706);
+    border: 1px solid #f59e0b;
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #002d25;
+    color: #ffffff;
+    padding: 1.25rem 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+}
+.footer-link:hover {
+    text-decoration: underline;
+    color: #d1d5db; 
+}
+
+/* ------------------------------------ Responsive Design (Mobile View) ------------------------------------ */
+@media (min-width: 768px) {
+    .main-content {
+        /* Desktop Calculation: 100vh - Header(64px) - Banner(256px) */
+        min-height: calc(100vh - var(--header-height) - var(--banner-height-desktop));
+    }
+}
+
+@media screen and (max-width: 1023px) { 
+    /* Hide the desktop sidebar on mobile */
+    .sidebar {
+        display: none;
+    }
+    .main-content {
+        display: block;
+    }
+    .content-area {
+        padding: 1rem;
+    }
+
+    /* Table to Card View Transformation on Mobile */
+    #studentTable, #studentTable tbody, #studentTable tr, #studentTable td {
+        display: block;
+        width: 100%;
+    }
+    #studentTable thead {
+        display: none; /* Hide standard header */
+    }
+    #studentTable tr {
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+    #studentTable td {
+        text-align: right;
+        padding: 0.75rem 1rem;
+        border: none;
+        border-bottom: 1px solid #e5e7eb;
+        position: relative;
+    }
+    #studentTable td:last-child {
+        border-bottom: none;
+    }
+    
+    /* Show the data-label as a pseudo-element on mobile */
+    #studentTable td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        font-weight: 600;
+        text-align: left;
+        color: #4b5563;
+    }
+
+    /* Handling Rowspan Cells on Mobile */
+    .project-cell, .status-cell {
+        display: block !important; 
+        text-align: left !important;
+        background-color: #f7f7f7;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .project-cell::before, .status-cell::before {
+        content: attr(data-label) !important;
+        position: static !important;
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.875rem;
+    }
+
+    /* Hide the project/status cells for the *secondary* students in the group */
+    .group-row td:nth-child(3), 
+    .group-row td:nth-child(4) {
+        display: none;
+    }
+    
+    /* Only the FIRST row of the group (which contains project/status cells) should show them */
+    .group-row:has(.project-cell) td:nth-child(3),
+    .group-row:has(.project-cell) td:nth-child(4) {
+        display: block;
+        border-top: 1px solid #e5e7eb;
+    }
+}

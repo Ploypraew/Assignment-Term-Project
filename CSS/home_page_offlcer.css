@@ -1,0 +1,275 @@
+ * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Sarabun', sans-serif; /* ใช้ Sarabun ตามที่กำหนดใน link */
+        }
+        /* ตัวแปรสีเพื่อให้จัดการง่าย */
+        :root {
+            --header-bg: #f0f0f0; /* สีเทาอ่อนสำหรับพื้นหลังส่วนหัวของตาราง */
+            --main-bg: #8ba8c7; /* สีฟ้า/น้ำเงินสำหรับพื้นหลังหลักของ body */
+            --sidebar-item-bg: #ffffff; /* สีขาวสำหรับพื้นหลังเนื้อหาหลัก */
+            --sidebar-item-selected-bg: #d3e0f0; /* สีฟ้าอ่อนสำหรับปุ่มที่ถูกเลือก */
+            --button-detail-bg: #4caf50; /* สีเขียวสำหรับปุ่มรายละเอียด */
+            --text-color: #333;
+            --white-text: #ffffff;
+            --kmutnb-red: #8b0000; /* สีแดงเข้มคล้ายโลโก้ */
+            /* ตัวแปรสีที่เกี่ยวข้องกับ Sidebar */
+            --sidebar-bg: #ffffff; /* พื้นหลัง Sidebar: กำหนดเป็นสีขาว (ตามคำขอ) */
+            --shadow-sidebar: 2px 0 10px rgba(0, 0, 0, 0.05);
+            --text-secondary: #6b7280;
+            --active-bg-light: #e0f2fe; /* Light blue background for selected item */
+            --active-blue: #0ea5e9; /* Tailwind sky-500 for border/text of selected item */
+        }
+        body {
+            background-color: var(--main-bg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* HEADER STYLES */
+        .header {
+            background-color: #004d40; /* Dark Teal */
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header-left { display: flex; align-items: center; gap: 0.75rem; color: #ffffff; }
+        .logo { height: 40px; }
+        .site-title { font-size: 1.25rem; font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 0.75rem; }
+        .user-name { font-size: 0.875rem; color: white; }
+        .profile-img { 
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffffff;
+        }
+        .logout-button {
+            background-color: #8b0000;
+            color: white;
+            padding: 6px 12px; 
+            border-radius: 8px; 
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            border: none;
+        }
+        .logout-button:hover {
+            background-color: #a30000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* SIDEBAR STYLES */
+.sidebar {
+            width: 300px;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--sidebar-bg); 
+            box-shadow: var(--shadow-sidebar);
+            flex-shrink: 0;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            margin: 0.25rem 0.75rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+            gap: 0.5rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+        }
+
+        .sidebar-item.selected { /* ใช้ selected สำหรับรายการที่ถูกเลือก */
+            background-color: var(--active-bg-light);
+            color: var(--active-blue);
+            font-weight: 600;
+            border-left: 4px solid var(--active-blue);
+            padding-left: calc(1.5rem - 4px);
+            box-shadow: 0 2px 8px rgba(14, 165, 236, 0.15);
+        }
+        
+        .sidebar-item.selected .sidebar-icon {
+            color: var(--active-blue);
+        }
+
+        /* Mobile Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 20; /* Below sidebar */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Responsive Sidebar: Hidden on mobile by default, shown when toggled */
+        @media (max-width: 767px) {
+            #sidebar {
+                position: fixed;
+                height: 100%;
+                z-index: 30;
+            }
+            .sidebar {
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+                /* สำหรับ Mobile ยังคงใช้ position: fixed เพื่อให้เมนูแสดงทับจอ */
+            }
+            .main-content {
+                /* Prevents main content from being obscured when sidebar is open */
+                overflow: hidden; 
+            }
+        }
+        
+        /* CONTENT AREA STYLES */
+        .content-area {
+            flex-grow: 1;
+            padding: 20px 40px;
+            background-color: var(--sidebar-item-bg); /* พื้นหลังสีขาว */
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        /* ตาราง (Table) and Status Badges */
+        .project-table {
+            border-spacing: 0;
+        }
+        .project-table th, .project-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #e5e7eb; /* Light gray border */
+        }
+        .project-table th {
+            background-color: var(--header-bg);
+            font-weight: bold;
+            color: var(--text-color);
+            text-align: center;
+        }
+        .project-table td:nth-child(2) { /* คอลัมน์สถานะ */
+            text-align: center;
+            width: 20%;
+        }
+        .project-table td:nth-child(3) { /* คอลัมน์รายละเอียด */
+            text-align: center;
+            width: 15%;
+        }
+
+        /* สถานะ (Status Badge) */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .status-badge.pending {
+            background-color: #fef3c7; /* light yellow-200 */
+            color: #d97706; /* dark yellow-700 */
+            border: 1px solid #fcd34d; /* yellow-400 */
+        }
+        .status-badge.approved {
+            background-color: #d1fae5; /* light green-200 */
+            color: #059669; /* dark green-700 */
+            border: 1px solid #6ee7b7; /* green-400 */
+        }
+        
+        /* ปุ่มรายละเอียด (Detail Button) */
+        .detail-button {
+            background-color: var(--button-detail-bg);
+            color: var(--white-text);
+            border: none;
+            padding: 8px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .detail-button:hover {
+            background-color: #45a049;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FOOTER STYLES */
+        .footer {
+            background-color: #002d25;
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+            margin-top: auto; /* Push footer to the bottom */
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db;
+        }
+
+        /* Responsive Table (Mobile View) */
+        @media screen and (max-width: 768px) {
+            .content-area {
+                padding: 15px;
+            }
+            .project-table thead {
+                display: none; /* Hide table headers (but not important for screen readers) */
+            }
+            .project-table, .project-table tbody, .project-table tr, .project-table td {
+                display: block;
+                width: 100%;
+            }
+            .project-table tr {
+                margin-bottom: 1rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.5rem;
+                overflow: hidden;
+            }
+            .project-table td {
+                text-align: right !important;
+                padding-left: 50%;
+                position: relative;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+            .project-table td:last-child {
+                border-bottom: 0;
+            }
+            .project-table td::before {
+                /* Create the label for mobile view */
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }

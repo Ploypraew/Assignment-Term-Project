@@ -1,0 +1,85 @@
+ body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .header {
+            background-color: #004d40; /* Dark Teal - KMUTNB inspired */
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header-left { display: flex; align-items: center; gap: 0.75rem; }
+        .logo { height: 40px; }
+        .site-title { font-size: 1.25rem; font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 0.75rem; }
+        .user-name { font-size: 0.875rem; }
+        
+        .profile-img { 
+            height: 36px; /* กำหนดขนาด */
+            width: 36px;
+            border-radius: 50%; /* ทำให้เป็นวงกลม */
+            object-fit: cover;
+            border: 2px solid #ffffff; /* ขอบสีขาว */
+        }
+
+        .sidebar {
+            background-color: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-radius: 0.75rem;
+            color: #4a5568;
+            transition: all 0.2s ease-in-out;
+            gap: 1rem;
+        }
+       
+        .sidebar-item:hover { background-color: #e2e8f0; color: #2d3748; }
+        .sidebar-item.active { background-color: #dbeafe; color: #1e40af; font-weight: 600; }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .signature {
+            border-top: 1px solid #e2e8f0;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            text-align: right;
+            font-size: 0.875rem;
+            color: #718096;
+        }
+        .table-cell-border-left {
+            border-left: 1px solid #e2e8f0;
+        }
+        .progress-bar {
+            background-image: linear-gradient(to right, #4ade80, #16a34a);
+            transition: width 0.5s ease-in-out;
+        }
+        /* FOOTER STYLES */
+        .footer {
+            background-color: #002d25; /* Darker shade of header teal for contrast */
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.875rem; /* text-sm */
+            /* Using inset shadow for a clean separation line */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) inset; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+            color: #d1d5db; /* Light gray on hover */
+        }
+        
